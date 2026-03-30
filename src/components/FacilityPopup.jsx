@@ -101,15 +101,6 @@ export default function FacilityPopup({ facility }) {
         >
           View full EPA report &rarr;
         </a>
-        {srn && (
-          <a
-            href={`https://www.egle.state.mi.us/aps/downloads/SRN/${srn}/`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            EGLE permit docs &rarr;
-          </a>
-        )}
       </div>
     </div>
   )

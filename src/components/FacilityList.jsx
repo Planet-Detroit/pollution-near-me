@@ -147,15 +147,6 @@ function FacilityCard({ facility }) {
         >
           Full EPA report &rarr;
         </a>
-        {srn && (
-          <a
-            href={`https://www.egle.state.mi.us/aps/downloads/SRN/${srn}/`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            EGLE permit documents &rarr;
-          </a>
-        )}
       </div>
     </div>
   )

@@ -16,7 +16,7 @@ export const DEFAULT_RADIUS_INDEX = 1 // "My neighborhood" (1 mile)
 export const COMPLIANCE_COLORS = {
   'High Priority Violation': { color: '#dc2626', label: 'High Priority Violation', shortLabel: 'HPV' },
   'Violation w/in 1 Year': { color: '#f97316', label: 'Violation Within Past Year', shortLabel: 'Recent Violation' },
-  'No Violation Identified': { color: '#16a34a', label: 'No Violations', shortLabel: 'Compliant' },
+  'No Violation Identified': { color: '#333333', label: 'No Violations Identified', shortLabel: 'No Violations' },
   unknown: { color: '#9ca3af', label: 'Status Unknown', shortLabel: 'Unknown' },
 }
 

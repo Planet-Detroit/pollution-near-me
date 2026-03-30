@@ -69,13 +69,9 @@ describe('FacilityPopup', () => {
     )
   })
 
-  it('links to EGLE APS permit docs using extracted SRN', () => {
+  it('does not show EGLE link (many SRNs have no folder)', () => {
     render(<FacilityPopup facility={mockFacility} />)
-    const link = screen.getByText(/EGLE permit docs/)
-    expect(link).toHaveAttribute(
-      'href',
-      'https://www.egle.state.mi.us/aps/downloads/SRN/A9831/'
-    )
+    expect(screen.queryByText(/EGLE/)).not.toBeInTheDocument()
   })
 
   it('handles facility with no violations', () => {
@@ -87,7 +83,7 @@ describe('FacilityPopup', () => {
       penalties: 0,
     }
     render(<FacilityPopup facility={clean} />)
-    expect(screen.getByText('No Violations')).toBeInTheDocument()
+    expect(screen.getByText('No Violations Identified')).toBeInTheDocument()
     expect(screen.queryByText(/Recent violations/)).not.toBeInTheDocument()
   })
 })

@@ -3,18 +3,35 @@ import { supabase } from './supabaseClient'
 /**
  * Fetch ALL Michigan facilities (for initial map display).
  * Only fetches the columns needed for map markers, not full detail.
+ * Paginates in batches of 1000 since Supabase has a default row limit.
  */
 export async function queryAllFacilities() {
-  const { data, error } = await supabase
-    .from('air_facilities')
-    .select('source_id,facility_name,lat,lon,compliance_status,classification,air_status')
+  const PAGE_SIZE = 1000
+  let allData = []
+  let from = 0
 
-  if (error) {
-    console.error('Supabase query error:', error)
-    throw new Error('Failed to query facilities')
+  while (true) {
+    const { data, error } = await supabase
+      .from('air_facilities')
+      .select('source_id,facility_name,lat,lon,compliance_status,classification,air_status')
+      .range(from, from + PAGE_SIZE - 1)
+
+    if (error) {
+      console.error('Supabase query error:', error)
+      throw new Error('Failed to query facilities')
+    }
+
+    if (!data || data.length === 0) break
+
+    allData = allData.concat(data)
+
+    // If we got fewer rows than the page size, we've reached the end
+    if (data.length < PAGE_SIZE) break
+
+    from += PAGE_SIZE
   }
 
-  return data || []
+  return allData
 }
 
 /**

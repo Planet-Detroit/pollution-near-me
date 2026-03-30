@@ -63,10 +63,11 @@ function App() {
     queryAllFacilities().then(setAllFacilities).catch(console.error)
   }, [])
 
-  // If we restored location from URL, fetch nearby once allFacilities loads
+  // If we restored location from URL, fetch nearby and check road proximity
   useEffect(() => {
     if (initialLocation && allFacilities.length > 0 && nearbyFacilities.length === 0 && !loading) {
       fetchNearby(initialLocation, initialRadius)
+      isNearMajorRoad(initialLocation.lat, initialLocation.lon).then(setNearMajorRoad)
     }
   }, [allFacilities]) // eslint-disable-line react-hooks/exhaustive-deps
 

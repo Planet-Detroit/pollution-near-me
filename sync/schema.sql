@@ -103,11 +103,30 @@ as $$
     facility_name;
 $$;
 
+-- Regulated pollutants per facility (from ICIS-Air bulk download)
+create table if not exists air_facility_pollutants (
+  id serial primary key,
+  source_id text not null,
+  pollutant_code text,
+  pollutant_desc text not null,
+  cas_number text,
+  unique(source_id, pollutant_desc)
+);
+
+create index if not exists idx_facility_pollutants_source
+  on air_facility_pollutants(source_id);
+
 -- Enable RLS (Row Level Security) with public read access
 alter table air_facilities enable row level security;
 
 create policy "Public read access for air_facilities"
   on air_facilities for select
+  using (true);
+
+alter table air_facility_pollutants enable row level security;
+
+create policy "Public read access for air_facility_pollutants"
+  on air_facility_pollutants for select
   using (true);
 
 alter table air_sync_log enable row level security;

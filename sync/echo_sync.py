@@ -210,6 +210,63 @@ def sync_to_supabase(records):
     return updated
 
 
+def sync_pollutants(supabase):
+    """Download ICIS-Air bulk file and sync pollutant data for Michigan facilities."""
+    import zipfile
+    import io as _io
+
+    print("\nStep 4: Downloading ICIS-Air bulk pollutants data...")
+    resp = requests.get(
+        "https://echo.epa.gov/files/echodownloads/ICIS-AIR_downloads.zip",
+        timeout=300,
+    )
+    resp.raise_for_status()
+    print(f"  Downloaded {len(resp.content) / 1024 / 1024:.1f} MB")
+
+    # Extract just the pollutants CSV from the zip
+    with zipfile.ZipFile(_io.BytesIO(resp.content)) as zf:
+        with zf.open("ICIS-AIR_POLLUTANTS.csv") as pf:
+            text = pf.read().decode("utf-8")
+
+    reader = csv.DictReader(io.StringIO(text))
+
+    # Deduplicate and filter to Michigan
+    seen = set()
+    records = []
+    skip_descs = {"FACIL", "OTHER", "POLLUTANT X", "GHG"}
+
+    for row in reader:
+        sid = row["PGM_SYS_ID"]
+        if not sid.startswith("MI"):
+            continue
+        desc = row["POLLUTANT_DESC"].strip()
+        if desc in skip_descs:
+            continue
+        key = (sid, desc)
+        if key in seen:
+            continue
+        seen.add(key)
+        records.append({
+            "source_id": sid,
+            "pollutant_code": row["POLLUTANT_CODE"].strip(),
+            "pollutant_desc": desc,
+            "cas_number": row.get("CHEMICAL_ABSTRACT_SERVICE_NMBR", "").strip() or None,
+        })
+
+    print(f"  Found {len(records)} unique MI pollutant records")
+
+    # Clear and reload
+    supabase.table("air_facility_pollutants").delete().neq("id", 0).execute()
+
+    batch_size = 500
+    for i in range(0, len(records), batch_size):
+        batch = records[i:i + batch_size]
+        supabase.table("air_facility_pollutants").insert(batch).execute()
+
+    print(f"  Synced {len(records)} pollutant records")
+    return len(records)
+
+
 def main():
     try:
         # Download from ECHO
@@ -227,10 +284,16 @@ def main():
 
         print(f"  Transformed {len(records)} records ({skipped} skipped - no coordinates)")
 
-        # Sync to Supabase
+        # Sync facilities to Supabase
         updated = sync_to_supabase(records)
 
-        print(f"\nDone! {updated} Michigan CAA facilities synced to Supabase.")
+        # Sync pollutants (from ICIS-Air bulk download)
+        url = os.environ["SUPABASE_URL"]
+        key = os.environ["SUPABASE_SERVICE_KEY"]
+        supabase = create_client(url, key)
+        pollutant_count = sync_pollutants(supabase)
+
+        print(f"\nDone! {updated} facilities + {pollutant_count} pollutant records synced.")
 
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)

@@ -22,10 +22,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r sync/requirements.txt
 
-      - name: Run ECHO sync
+      - name: Run ECHO sync (facilities + pollutants)
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        timeout-minutes: 15
         run: python sync/echo_sync.py
 
       - name: Update last-sync timestamp

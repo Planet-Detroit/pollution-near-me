@@ -32,49 +32,33 @@ describe('FacilityPopup', () => {
 
   it('displays industry label from NAICS code', () => {
     render(<FacilityPopup facility={mockFacility} />)
-    // NAICS 324110 = Petroleum Refinery
     expect(screen.getByText('Petroleum Refinery')).toBeInTheDocument()
   })
 
-  it('displays compliance status', () => {
+  it('displays compliance status and violation count', () => {
     render(<FacilityPopup facility={mockFacility} />)
     expect(screen.getByText('High Priority Violation')).toBeInTheDocument()
+    expect(screen.getByText(/3 violation/)).toBeInTheDocument()
   })
 
-  it('displays violation count and pollutant descriptions', () => {
+  it('shows pollutant names in plain English (FACIL filtered out)', () => {
     render(<FacilityPopup facility={mockFacility} />)
-    expect(screen.getByText('3')).toBeInTheDocument()
-    // Pollutants now show plain-English names and health descriptions
-    // FACIL is filtered out when real pollutants are present
     expect(screen.getByText('Carbon Monoxide (CO)')).toBeInTheDocument()
-    expect(screen.getByText(/Reduces the blood/)).toBeInTheDocument()
+    expect(screen.queryByText('FACIL')).not.toBeInTheDocument()
   })
 
-  it('displays penalties formatted as currency', () => {
+  it('shows address', () => {
     render(<FacilityPopup facility={mockFacility} />)
-    expect(screen.getByText('$250,000')).toBeInTheDocument()
-  })
-
-  it('translates program codes to plain English', () => {
-    render(<FacilityPopup facility={mockFacility} />)
-    // FESOP is the first program listed, shown as its full name
-    expect(screen.getByText('Federally Enforceable State Operating Permit')).toBeInTheDocument()
-    // Shows "+1 more" since we display max 4 of 5 programs
-    expect(screen.getByText(/more/)).toBeInTheDocument()
+    expect(screen.getByText('1300 S FORT ST, DETROIT')).toBeInTheDocument()
   })
 
   it('links to EPA ECHO detail page', () => {
     render(<FacilityPopup facility={mockFacility} />)
-    const link = screen.getByText(/View full EPA report/)
+    const link = screen.getByText(/Full EPA report/)
     expect(link).toHaveAttribute(
       'href',
       'https://echo.epa.gov/detailed-facility-report?fid=110000000001'
     )
-  })
-
-  it('does not show EGLE link (many SRNs have no folder)', () => {
-    render(<FacilityPopup facility={mockFacility} />)
-    expect(screen.queryByText(/EGLE/)).not.toBeInTheDocument()
   })
 
   it('handles facility with no violations', () => {
@@ -87,6 +71,6 @@ describe('FacilityPopup', () => {
     }
     render(<FacilityPopup facility={clean} />)
     expect(screen.getByText('No Violations Identified')).toBeInTheDocument()
-    expect(screen.queryByText(/Recent violations/)).not.toBeInTheDocument()
+    expect(screen.queryAllByText(/violation/i)).toHaveLength(1) // just the status label
   })
 })

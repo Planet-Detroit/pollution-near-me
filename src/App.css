@@ -598,82 +598,53 @@ body {
 
 .facility-popup {
   font-size: 13px;
-  line-height: 1.4;
-  max-width: 300px;
+  line-height: 1.5;
+  min-width: 200px;
+  max-width: 280px;
 }
 
 .popup-name {
-  font-family: 'Asap', Arial, sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   margin: 0 0 2px;
 }
 
 .popup-industry {
-  color: #515151;
-  font-style: italic;
-  margin: 0 0 4px;
+  color: var(--pd-text-secondary);
+  font-size: 12px;
+  margin: 0 0 2px;
 }
 
 .popup-address {
-  color: #666;
+  color: #888;
   margin: 0 0 8px;
   font-size: 12px;
 }
 
-.popup-compliance {
+.popup-status {
   border-left: 3px solid;
-  padding: 4px 8px;
-  margin: 0 0 8px;
-  font-weight: 600;
+  padding: 3px 8px;
+  margin: 0 0 6px;
+  font-size: 13px;
 }
 
-.popup-field {
-  margin: 2px 0;
-}
-
-.field-label {
-  color: #515151;
-}
-
-.popup-violations {
-  background: #fef2f2;
-  padding: 6px 8px;
-  border-radius: 4px;
-  margin: 8px 0;
-}
-
-.popup-programs {
-  margin: 8px 0;
-}
-
-.popup-programs ul {
-  margin: 2px 0 0;
-  padding-left: 16px;
+.popup-pollutant-names {
   font-size: 12px;
-  color: #515151;
+  color: var(--pd-text-secondary);
+  margin: 0 0 8px;
+  font-style: italic;
 }
 
-.popup-programs li {
-  margin: 1px 0;
-}
-
-.popup-links {
-  margin-top: 8px;
+.popup-epa-link {
+  display: block;
+  font-size: 12px;
+  color: var(--pd-blue);
+  text-decoration: none;
   padding-top: 6px;
   border-top: 1px solid #eee;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
 }
 
-.popup-links a {
-  color: #2f80c3;
-  text-decoration: none;
-  font-size: 12px;
-}
-
-.popup-links a:hover {
+.popup-epa-link:hover {
   text-decoration: underline;
 }
 
@@ -774,27 +745,6 @@ body {
 }
 
 /* -- Pollutant Descriptions (popup + cards) - */
-
-.popup-pollutants {
-  margin: 6px 0 8px;
-}
-
-.popup-pollutant {
-  margin: 4px 0;
-  font-size: 12px;
-}
-
-.popup-pollutant strong {
-  display: block;
-  font-size: 12px;
-}
-
-.popup-pollutant .pollutant-health {
-  font-size: 11px;
-  color: #515151;
-  margin: 1px 0 0;
-  line-height: 1.4;
-}
 
 .card-pollutant-list {
   display: flex;

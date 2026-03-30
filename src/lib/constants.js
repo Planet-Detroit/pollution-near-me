@@ -30,19 +30,34 @@ export const CLASSIFICATION_SIZES = {
 export const DEFAULT_MARKER_SIZE = 8
 
 // Translate ECHO program codes to plain English
+// url is optional — links to the authoritative program page when available
 export const PROGRAM_LABELS = {
-  SIP: 'State Implementation Plan',
-  TVP: 'Title V (Major Source) Permit',
-  FESOP: 'Federally Enforceable State Operating Permit',
-  NSR: 'New Source Review Permit',
-  MACT: 'Maximum Achievable Control Technology',
-  NSPS: 'New Source Performance Standards',
-  GACTM: 'Generally Available Control Technology',
-  PSD: 'Prevention of Significant Deterioration',
-  NESH: 'National Emission Standards for Hazardous Air Pollutants',
-  GHG: 'Greenhouse Gas Reporting',
-  CFC: 'Chlorofluorocarbon Regulations',
-  AR: 'Acid Rain Program',
+  SIP: { label: 'State Implementation Plan', url: 'https://www.michigan.gov/egle/about/organization/air-quality/state-implementation-plan' },
+  TVP: { label: 'Title V (Major Source) Permit' },
+  FESOP: { label: 'Federally Enforceable State Operating Permit' },
+  NSR: { label: 'New Source Review Permit' },
+  MACT: { label: 'Maximum Achievable Control Technology' },
+  NSPS: { label: 'New Source Performance Standards' },
+  GACTM: { label: 'Generally Available Control Technology' },
+  PSD: { label: 'Prevention of Significant Deterioration' },
+  NESH: { label: 'National Emission Standards for Hazardous Air Pollutants' },
+  GHG: { label: 'Greenhouse Gas Reporting' },
+  CFC: { label: 'Chlorofluorocarbon Regulations' },
+  AR: { label: 'Acid Rain Program' },
+}
+
+/** Helper to get the label string for a program code */
+export function getProgramLabel(code) {
+  const entry = PROGRAM_LABELS[code]
+  if (!entry) return code
+  return typeof entry === 'string' ? entry : entry.label
+}
+
+/** Helper to get the URL for a program code (or null) */
+export function getProgramUrl(code) {
+  const entry = PROGRAM_LABELS[code]
+  if (!entry || typeof entry === 'string') return null
+  return entry.url || null
 }
 
 // NAICS code to plain-English industry (common Michigan industries)

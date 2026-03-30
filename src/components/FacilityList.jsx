@@ -1,8 +1,9 @@
 import {
   COMPLIANCE_COLORS,
-  PROGRAM_LABELS,
   NAICS_LABELS,
   RADIUS_PRESETS,
+  getProgramLabel,
+  getProgramUrl,
 } from '../lib/constants'
 import { parsePollutants } from '../lib/pollutants'
 
@@ -145,9 +146,17 @@ function FacilityCard({ facility }) {
           <div className="card-section">
             <h4>Permits & Programs</h4>
             <ul className="card-programs">
-              {programs.map(code => (
-                <li key={code}>{PROGRAM_LABELS[code] || code}</li>
-              ))}
+              {programs.map(code => {
+                const label = getProgramLabel(code)
+                const url = getProgramUrl(code)
+                return (
+                  <li key={code}>
+                    {url ? (
+                      <a href={url} target="_blank" rel="noopener noreferrer">{label}</a>
+                    ) : label}
+                  </li>
+                )
+              })}
             </ul>
           </div>
         )}

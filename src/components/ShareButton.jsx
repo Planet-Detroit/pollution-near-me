@@ -1,12 +1,50 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function ShareButton({ url, address }) {
+// Generate a static map image URL via OpenStreetMap's static map service
+function getStaticMapUrl(lat, lon) {
+  // Use osm-static-maps via a free tile-based approach
+  // This generates a URL that social platforms can scrape
+  return `https://staticmap.openstreetmap.de/staticmap.php?center=${lat},${lon}&zoom=12&size=1200x630&markers=${lat},${lon},red-pushpin`
+}
+
+export default function ShareButton({ url, address, lat, lon, stats }) {
   const [copied, setCopied] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
 
-  const shareText = address
-    ? `See air pollution sources near ${address}`
-    : 'See air pollution sources near your Michigan address'
+  // Update OG meta tags when address changes (for social crawlers on shared links)
+  useEffect(() => {
+    if (!address) return
+
+    const title = `Air pollution sources near ${address}`
+    const description = stats
+      ? `${stats.total} regulated facilities within 3 miles. ${stats.hpv} with high priority violations, ${stats.recentViolation} with recent violations.`
+      : `See air pollution sources near this Michigan address.`
+
+    document.title = `${title} | Pollution Near Me`
+
+    setMetaTag('og:title', title)
+    setMetaTag('og:description', description)
+    setMetaTag('twitter:title', title)
+    setMetaTag('twitter:description', description)
+
+    if (lat && lon) {
+      const mapImg = getStaticMapUrl(lat, lon)
+      setMetaTag('og:image', mapImg)
+      setMetaTag('twitter:image', mapImg)
+    }
+  }, [address, lat, lon, stats])
+
+  function setMetaTag(property, content) {
+    let tag = document.querySelector(`meta[property="${property}"]`)
+      || document.querySelector(`meta[name="${property}"]`)
+    if (tag) {
+      tag.setAttribute('content', content)
+    }
+  }
+
+  const shareText = stats
+    ? `${stats.total} air pollution sources within 3 miles of ${address}. ${stats.hpv + stats.recentViolation} with violations.`
+    : `See air pollution sources near ${address || 'your Michigan address'}`
 
   async function copyLink() {
     try {
@@ -14,7 +52,6 @@ export default function ShareButton({ url, address }) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      // Fallback for older browsers
       const input = document.createElement('input')
       input.value = url
       document.body.appendChild(input)
@@ -24,6 +61,7 @@ export default function ShareButton({ url, address }) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     }
+    setShowMenu(false)
   }
 
   function shareToX() {

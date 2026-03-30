@@ -39,9 +39,10 @@ describe('Constants', () => {
   })
 
   it('program labels translate common codes to plain English', () => {
-    expect(PROGRAM_LABELS.TVP).toContain('Title V')
-    expect(PROGRAM_LABELS.FESOP).toContain('Federally Enforceable')
-    expect(PROGRAM_LABELS.MACT).toContain('Maximum Achievable')
+    expect(PROGRAM_LABELS.TVP.label).toContain('Title V')
+    expect(PROGRAM_LABELS.FESOP.label).toContain('Federally Enforceable')
+    expect(PROGRAM_LABELS.MACT.label).toContain('Maximum Achievable')
+    expect(PROGRAM_LABELS.SIP.url).toContain('michigan.gov')
   })
 
   it('Metro Detroit center is in southeast Michigan', () => {

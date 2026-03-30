@@ -159,7 +159,13 @@ function App() {
               {userLocation && (
                 <div className="controls-row">
                   <RadiusSelector selectedIndex={radiusIndex} onChange={handleRadiusChange} />
-                  <ShareButton url={getShareUrl()} address={userLocation.matchedAddress} />
+                  <ShareButton
+                    url={getShareUrl()}
+                    address={userLocation.matchedAddress}
+                    lat={userLocation.lat}
+                    lon={userLocation.lon}
+                    stats={stats}
+                  />
                 </div>
               )}
 

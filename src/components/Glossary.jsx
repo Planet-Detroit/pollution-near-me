@@ -84,47 +84,35 @@ const TERMS = [
 ]
 
 export default function Glossary() {
-  const [isOpen, setIsOpen] = useState(false)
   const [expandedTerm, setExpandedTerm] = useState(null)
 
   return (
     <div className="glossary">
-      <button
-        className="glossary-toggle"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-      >
-        {isOpen ? 'Hide' : 'Show'} glossary of terms
-        <span className="glossary-arrow">{isOpen ? '\u25B2' : '\u25BC'}</span>
-      </button>
-
-      {isOpen && (
-        <div className="glossary-content">
-          <h3 className="glossary-title">Glossary</h3>
-          <p className="glossary-intro">
-            Understanding air quality regulations can be confusing. Here's what the terms in this tool mean.
-          </p>
-          <dl className="glossary-list">
-            {TERMS.map(({ term, definition }) => (
-              <div
-                key={term}
-                className={`glossary-item ${expandedTerm === term ? 'expanded' : ''}`}
+      <div className="glossary-content">
+        <h2 className="glossary-title">Glossary of Terms</h2>
+        <p className="glossary-intro">
+          Understanding air quality regulations can be confusing. Here's what the terms in this tool mean.
+        </p>
+        <dl className="glossary-list">
+          {TERMS.map(({ term, definition }) => (
+            <div
+              key={term}
+              className={`glossary-item ${expandedTerm === term ? 'expanded' : ''}`}
+            >
+              <dt
+                className="glossary-term"
+                onClick={() => setExpandedTerm(expandedTerm === term ? null : term)}
               >
-                <dt
-                  className="glossary-term"
-                  onClick={() => setExpandedTerm(expandedTerm === term ? null : term)}
-                >
-                  {term}
-                  <span className="glossary-expand">{expandedTerm === term ? '\u2212' : '+'}</span>
-                </dt>
-                {expandedTerm === term && (
-                  <dd className="glossary-definition">{definition}</dd>
-                )}
-              </div>
-            ))}
-          </dl>
-        </div>
-      )}
+                {term}
+                <span className="glossary-expand">{expandedTerm === term ? '\u2212' : '+'}</span>
+              </dt>
+              {expandedTerm === term && (
+                <dd className="glossary-definition">{definition}</dd>
+              )}
+            </div>
+          ))}
+        </dl>
+      </div>
     </div>
   )
 }

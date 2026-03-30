@@ -79,8 +79,8 @@ create table if not exists air_sync_log (
 
 -- RPC function for spatial queries (used by the frontend)
 create or replace function facilities_within_radius(
-  lat double precision,
-  lon double precision,
+  p_lat double precision,
+  p_lon double precision,
   radius_meters double precision
 )
 returns setof air_facilities
@@ -91,10 +91,16 @@ as $$
   from air_facilities
   where st_dwithin(
     geom,
-    st_setsrid(st_makepoint(lon, lat), 4326)::geography,
+    st_setsrid(st_makepoint(p_lon, p_lat), 4326)::geography,
     radius_meters
   )
-  order by compliance_status desc, facility_name;
+  order by
+    case compliance_status
+      when 'High Priority Violation' then 1
+      when 'Violation w/in 1 Year' then 2
+      else 3
+    end,
+    facility_name;
 $$;
 
 -- Enable RLS (Row Level Security) with public read access

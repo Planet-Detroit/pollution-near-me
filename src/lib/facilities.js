@@ -6,8 +6,8 @@ import { supabase } from './supabaseClient'
  */
 export async function queryFacilitiesNearby(lat, lon, radiusMeters) {
   const { data, error } = await supabase.rpc('facilities_within_radius', {
-    lat,
-    lon,
+    p_lat: lat,
+    p_lon: lon,
     radius_meters: radiusMeters,
   })
 

@@ -1,10 +1,22 @@
 import { COMPLIANCE_COLORS, CLASSIFICATION_SIZES } from '../lib/constants'
 
 const STATUS_ITEMS = [
-  { key: 'High Priority Violation', size: 14 },
-  { key: 'Violation w/in 1 Year', size: 14 },
-  { key: 'No Violation Identified', size: 14 },
-  { key: 'unknown', size: 14 },
+  {
+    key: 'High Priority Violation',
+    tooltip: 'The most serious violations — exceeding emission limits, operating without a required permit, or failing to meet compliance deadlines. Tracked at the federal level and can trigger legal enforcement action. A facility with an HPV may also have other recent violations.',
+  },
+  {
+    key: 'Violation w/in 1 Year',
+    tooltip: 'This facility has been cited for a violation in the past year, but it does not rise to "High Priority" level. May include reporting failures, minor permit deviations, or issues being actively resolved.',
+  },
+  {
+    key: 'No Violation Identified',
+    tooltip: 'No violations have been identified in EPA records. This does not mean the facility is pollution-free — it still has permits to emit pollutants. It means regulators have not cited it for violations.',
+  },
+  {
+    key: 'unknown',
+    tooltip: 'Compliance status is not available in EPA records. The facility may be closed, inactive, or not yet evaluated.',
+  },
 ]
 
 const SIZE_ITEMS = [
@@ -25,21 +37,33 @@ const SIZE_ITEMS = [
   },
 ]
 
+function LegendItemWithTooltip({ children, tooltip }) {
+  return (
+    <div className="legend-item legend-item-with-tooltip">
+      {children}
+      <span className="legend-tooltip-trigger" aria-label={tooltip}>
+        ?
+        <span className="legend-tooltip">{tooltip}</span>
+      </span>
+    </div>
+  )
+}
+
 export default function MapLegend() {
   return (
     <div className="map-legend">
       <div className="legend-section">
         <h4 className="legend-heading">Compliance Status</h4>
         <div className="legend-items">
-          {STATUS_ITEMS.map(({ key, size }) => {
+          {STATUS_ITEMS.map(({ key, tooltip }) => {
             const info = COMPLIANCE_COLORS[key]
             return (
-              <div key={key} className="legend-item">
-                <svg width={size * 2} height={size * 2} className="legend-dot">
+              <LegendItemWithTooltip key={key} tooltip={tooltip}>
+                <svg width={28} height={28} className="legend-dot">
                   <circle
-                    cx={size}
-                    cy={size}
-                    r={size * 0.7}
+                    cx={14}
+                    cy={14}
+                    r={10}
                     fill={info.color}
                     stroke="#fff"
                     strokeWidth="1"
@@ -47,7 +71,7 @@ export default function MapLegend() {
                   />
                 </svg>
                 <span className="legend-label">{info.label}</span>
-              </div>
+              </LegendItemWithTooltip>
             )
           })}
         </div>
@@ -56,7 +80,7 @@ export default function MapLegend() {
         <h4 className="legend-heading">Facility Size (emissions potential)</h4>
         <div className="legend-items">
           {SIZE_ITEMS.map(({ label, size, tooltip }) => (
-            <div key={label} className="legend-item legend-item-with-tooltip">
+            <LegendItemWithTooltip key={label} tooltip={tooltip}>
               <svg width={28} height={28} className="legend-dot">
                 <circle
                   cx={14}
@@ -69,11 +93,7 @@ export default function MapLegend() {
                 />
               </svg>
               <span className="legend-label">{label}</span>
-              <span className="legend-tooltip-trigger" aria-label={tooltip}>
-                ?
-                <span className="legend-tooltip">{tooltip}</span>
-              </span>
-            </div>
+            </LegendItemWithTooltip>
           ))}
         </div>
       </div>

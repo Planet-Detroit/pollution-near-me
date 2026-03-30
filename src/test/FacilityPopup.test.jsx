@@ -41,10 +41,13 @@ describe('FacilityPopup', () => {
     expect(screen.getByText('High Priority Violation')).toBeInTheDocument()
   })
 
-  it('displays violation count and pollutants', () => {
+  it('displays violation count and pollutant descriptions', () => {
     render(<FacilityPopup facility={mockFacility} />)
     expect(screen.getByText('3')).toBeInTheDocument()
-    expect(screen.getByText('Carbon monoxide, FACIL')).toBeInTheDocument()
+    // Pollutants now show plain-English names and health descriptions
+    // FACIL is filtered out when real pollutants are present
+    expect(screen.getByText('Carbon Monoxide (CO)')).toBeInTheDocument()
+    expect(screen.getByText(/Reduces the blood/)).toBeInTheDocument()
   })
 
   it('displays penalties formatted as currency', () => {

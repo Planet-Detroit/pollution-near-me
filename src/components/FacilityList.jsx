@@ -4,6 +4,7 @@ import {
   NAICS_LABELS,
   RADIUS_PRESETS,
 } from '../lib/constants'
+import { parsePollutants } from '../lib/pollutants'
 
 function getComplianceInfo(status) {
   return COMPLIANCE_COLORS[status] || COMPLIANCE_COLORS.unknown
@@ -41,8 +42,8 @@ function FacilityCard({ facility }) {
   const f = facility
   const compliance = getComplianceInfo(f.compliance_status)
   const industry = getIndustryLabel(f.naics)
-  const srn = extractSRN(f.source_id)
   const programs = (f.programs || '').split(', ').filter(Boolean)
+  const pollutants = parsePollutants(f.violation_pollutants)
   const triReleases = formatNumber(f.tri_air_releases)
   const ghgReleases = formatNumber(f.ghg_co2_releases)
 
@@ -74,18 +75,31 @@ function FacilityCard({ facility }) {
           <div className="card-section card-violations">
             <h4>Violations</h4>
             <p><strong>{f.recent_violation_count}</strong> recent violation{f.recent_violation_count !== 1 ? 's' : ''}</p>
-            {f.violation_pollutants && (
-              <p className="card-pollutants">Pollutants: {f.violation_pollutants}</p>
-            )}
             {f.last_violation_date && (
               <p>Most recent: {formatDate(f.last_violation_date)}</p>
             )}
             {f.months_with_hpv > 0 && (
               <p>In HPV status for {f.months_with_hpv} month{f.months_with_hpv !== 1 ? 's' : ''}</p>
             )}
-            {f.quarters_with_violations > 0 && (
-              <p>Quarters with violations: {f.quarters_with_violations}</p>
-            )}
+          </div>
+        )}
+
+        {pollutants.length > 0 && (
+          <div className="card-section">
+            <h4>Pollutants of Concern</h4>
+            <div className="card-pollutant-list">
+              {pollutants.map(({ raw, info }) => (
+                <div key={raw} className="card-pollutant-item">
+                  <p className="pollutant-name">{info?.name || raw}</p>
+                  {info?.health && (
+                    <p className="pollutant-health">{info.health}</p>
+                  )}
+                  {info?.sources && (
+                    <p className="pollutant-sources"><span className="field-label">Common sources:</span> {info.sources}</p>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

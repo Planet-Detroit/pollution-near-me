@@ -184,8 +184,13 @@ body {
   gap: 8px;
 }
 
-.search-input {
+.search-input-wrapper {
   flex: 1;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
   padding: 10px 14px;
   font-size: 15px;
   border: 2px solid #ddd;
@@ -222,6 +227,38 @@ body {
 .search-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--pd-border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+  box-shadow: var(--pd-shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.search-suggestion {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.search-suggestion:last-child {
+  border-bottom: none;
+}
+
+.search-suggestion:hover,
+.search-suggestion.selected {
+  background: #f0f7ff;
 }
 
 .search-error {
@@ -561,8 +598,59 @@ body {
   border-radius: 4px;
 }
 
-.card-pollutants {
-  font-weight: 600;
+/* -- Pollutant Descriptions (popup + cards) - */
+
+.popup-pollutants {
+  margin: 6px 0 8px;
+}
+
+.popup-pollutant {
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+.popup-pollutant strong {
+  display: block;
+  font-size: 12px;
+}
+
+.popup-pollutant .pollutant-health {
+  font-size: 11px;
+  color: #515151;
+  margin: 1px 0 0;
+  line-height: 1.4;
+}
+
+.card-pollutant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-pollutant-item {
+  background: #fff8f0;
+  border-left: 3px solid var(--pd-status-warning);
+  padding: 8px 10px;
+  border-radius: 0 4px 4px 0;
+}
+
+.pollutant-name {
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0 0 2px;
+}
+
+.pollutant-health {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 2px;
+  color: #333;
+}
+
+.pollutant-sources {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
 }
 
 .card-programs {

@@ -1,4 +1,5 @@
 import { COMPLIANCE_COLORS, PROGRAM_LABELS, NAICS_LABELS } from '../lib/constants'
+import { parsePollutants } from '../lib/pollutants'
 
 function getComplianceInfo(status) {
   return COMPLIANCE_COLORS[status] || COMPLIANCE_COLORS.unknown
@@ -14,7 +15,6 @@ function translatePrograms(programString) {
 
 function getIndustryLabel(naics) {
   if (!naics) return null
-  // NAICS field can contain multiple codes separated by commas/spaces
   const codes = naics.split(/[,\s]+/)
   for (const code of codes) {
     if (NAICS_LABELS[code.trim()]) return NAICS_LABELS[code.trim()]
@@ -22,18 +22,12 @@ function getIndustryLabel(naics) {
   return null
 }
 
-function extractSRN(sourceId) {
-  // ECHO SourceID format: MI00000000000A9831 -> SRN: A9831
-  if (!sourceId || !sourceId.startsWith('MI')) return null
-  return sourceId.replace(/^MI0+/, '')
-}
-
 export default function FacilityPopup({ facility }) {
   const f = facility
   const compliance = getComplianceInfo(f.compliance_status)
   const programs = translatePrograms(f.programs)
   const industry = getIndustryLabel(f.naics)
-  const srn = extractSRN(f.source_id)
+  const pollutants = parsePollutants(f.violation_pollutants)
 
   return (
     <div className="facility-popup">
@@ -60,10 +54,17 @@ export default function FacilityPopup({ facility }) {
           <p className="popup-field">
             <span className="field-label">Recent violations:</span> {f.recent_violation_count}
           </p>
-          {f.violation_pollutants && (
-            <p className="popup-field">
-              <span className="field-label">Pollutants:</span> {f.violation_pollutants}
-            </p>
+          {pollutants.length > 0 && (
+            <div className="popup-pollutants">
+              {pollutants.map(({ raw, info }) => (
+                <div key={raw} className="popup-pollutant">
+                  <strong>{info?.name || raw}</strong>
+                  {info?.health && (
+                    <p className="pollutant-health">{info.health}</p>
+                  )}
+                </div>
+              ))}
+            </div>
           )}
           {f.last_violation_date && (
             <p className="popup-field">

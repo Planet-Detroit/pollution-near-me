@@ -1,0 +1,385 @@
+/* ============================================
+   Pollution Near Me — Planet Detroit
+   ============================================ */
+
+/* -- Layout --------------------------------- */
+
+.app {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.app.embed-mode {
+  max-width: 100%;
+  padding: 0;
+}
+
+.app-header {
+  text-align: center;
+  padding: 24px 0 16px;
+}
+
+.app-header h1 {
+  font-family: 'Asap', Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.app-subtitle {
+  font-size: 16px;
+  color: #515151;
+  margin: 0 0 4px;
+}
+
+.app-credit {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.app-credit a {
+  color: #2f80c3;
+  text-decoration: none;
+}
+
+.app-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* -- Address Search ------------------------- */
+
+.search-container {
+  display: flex;
+  gap: 8px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: #2f80c3;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background: #2f80c3;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.search-button:hover:not(:disabled) {
+  background: #256ba3;
+}
+
+.search-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.search-error {
+  color: #dc2626;
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+/* -- Radius Selector ------------------------ */
+
+.radius-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.radius-label {
+  font-size: 14px;
+  color: #515151;
+  white-space: nowrap;
+}
+
+.radius-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.radius-button {
+  padding: 6px 12px;
+  font-size: 13px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.radius-button:hover {
+  background: #e8e8e8;
+}
+
+.radius-button.active {
+  background: #2f80c3;
+  color: white;
+  border-color: #2f80c3;
+}
+
+.radius-miles {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* -- Map ------------------------------------ */
+
+.map-and-summary {
+  position: relative;
+}
+
+.facility-map {
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+.embed-mode .facility-map {
+  border-radius: 0;
+  border: none;
+  height: 450px;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #515151;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* -- Summary Panel -------------------------- */
+
+.summary-panel {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.summary-title {
+  font-family: 'Asap', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.summary-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.summary-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stat-count {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #515151;
+}
+
+.summary-details {
+  font-size: 14px;
+  color: #333;
+}
+
+.summary-details p {
+  margin: 4px 0;
+}
+
+.data-freshness {
+  font-size: 12px;
+  color: #999;
+  margin: 12px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.data-freshness a {
+  color: #2f80c3;
+  text-decoration: none;
+}
+
+/* -- Facility Popup ------------------------- */
+
+.facility-popup {
+  font-size: 13px;
+  line-height: 1.4;
+  max-width: 300px;
+}
+
+.popup-name {
+  font-family: 'Asap', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+
+.popup-industry {
+  color: #515151;
+  font-style: italic;
+  margin: 0 0 4px;
+}
+
+.popup-address {
+  color: #666;
+  margin: 0 0 8px;
+  font-size: 12px;
+}
+
+.popup-compliance {
+  border-left: 3px solid;
+  padding: 4px 8px;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.popup-field {
+  margin: 2px 0;
+}
+
+.field-label {
+  color: #515151;
+}
+
+.popup-violations {
+  background: #fef2f2;
+  padding: 6px 8px;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.popup-programs {
+  margin: 8px 0;
+}
+
+.popup-programs ul {
+  margin: 2px 0 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: #515151;
+}
+
+.popup-programs li {
+  margin: 1px 0;
+}
+
+.popup-links {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.popup-links a {
+  color: #2f80c3;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.popup-links a:hover {
+  text-decoration: underline;
+}
+
+/* -- Disclaimer ----------------------------- */
+
+.disclaimer {
+  font-size: 12px;
+  color: #999;
+  padding: 12px 0 24px;
+  line-height: 1.5;
+}
+
+.disclaimer a {
+  color: #2f80c3;
+  text-decoration: none;
+}
+
+/* -- Responsive ----------------------------- */
+
+@media (max-width: 600px) {
+  .app-header h1 {
+    font-size: 22px;
+  }
+
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .facility-map {
+    height: 400px;
+  }
+
+  .summary-grid {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .radius-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

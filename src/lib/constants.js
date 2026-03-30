@@ -1,0 +1,67 @@
+// Map center coordinates
+export const METRO_DETROIT_CENTER = [42.35, -83.1]
+export const MICHIGAN_CENTER = [44.3, -84.7]
+export const METRO_DETROIT_ZOOM = 10
+export const MICHIGAN_ZOOM = 7
+
+// Search radius presets (in miles)
+export const RADIUS_PRESETS = [
+  { label: 'My block', miles: 0.5, meters: 804.67 },
+  { label: 'My neighborhood', miles: 1, meters: 1609.34 },
+  { label: 'My area', miles: 3, meters: 4828.03 },
+]
+export const DEFAULT_RADIUS_INDEX = 1 // "My neighborhood" (1 mile)
+
+// Compliance status colors and labels
+export const COMPLIANCE_COLORS = {
+  'High Priority Violation': { color: '#dc2626', label: 'High Priority Violation', shortLabel: 'HPV' },
+  'Violation w/in 1 Year': { color: '#f97316', label: 'Violation Within Past Year', shortLabel: 'Recent Violation' },
+  'No Violation Identified': { color: '#16a34a', label: 'No Violations', shortLabel: 'Compliant' },
+  unknown: { color: '#9ca3af', label: 'Status Unknown', shortLabel: 'Unknown' },
+}
+
+// Facility classification sizes (marker radius in pixels)
+export const CLASSIFICATION_SIZES = {
+  'Major Emissions': 10,
+  'Synthetic Minor Emissions': 7,
+  '80% Synthetic Minor Emissions': 7,
+  'Minor Emissions': 5,
+}
+export const DEFAULT_MARKER_SIZE = 5
+
+// Translate ECHO program codes to plain English
+export const PROGRAM_LABELS = {
+  SIP: 'State Implementation Plan',
+  TVP: 'Title V (Major Source) Permit',
+  FESOP: 'Federally Enforceable State Operating Permit',
+  NSR: 'New Source Review Permit',
+  MACT: 'Maximum Achievable Control Technology',
+  NSPS: 'New Source Performance Standards',
+  GACTM: 'Generally Available Control Technology',
+  PSD: 'Prevention of Significant Deterioration',
+  NESH: 'National Emission Standards for Hazardous Air Pollutants',
+  GHG: 'Greenhouse Gas Reporting',
+  CFC: 'Chlorofluorocarbon Regulations',
+  AR: 'Acid Rain Program',
+}
+
+// NAICS code to plain-English industry (common Michigan industries)
+export const NAICS_LABELS = {
+  '324110': 'Petroleum Refinery',
+  '331110': 'Iron & Steel Mill',
+  '327310': 'Cement Manufacturing',
+  '562211': 'Hazardous Waste Treatment',
+  '562212': 'Solid Waste Landfill',
+  '221112': 'Fossil Fuel Power Plant',
+  '221117': 'Biomass Power Plant',
+  '336111': 'Automobile Manufacturing',
+  '336112': 'Light Truck Manufacturing',
+  '336390': 'Auto Parts Manufacturing',
+  '325110': 'Petrochemical Manufacturing',
+  '325199': 'Chemical Manufacturing',
+  '322121': 'Paper Mill',
+  '327420': 'Gypsum Product Manufacturing',
+  '311221': 'Wet Corn Milling',
+  '332811': 'Metal Heat Treating',
+  '332813': 'Electroplating & Metal Finishing',
+}

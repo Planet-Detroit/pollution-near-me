@@ -11,7 +11,7 @@ import MapLegend from './components/MapLegend'
 import ShareButton from './components/ShareButton'
 import PDHeader from './components/PDHeader'
 import PDFooter from './components/PDFooter'
-import { queryAllFacilities, queryFacilitiesNearby, getLastSyncDate, aggregateFacilityStats } from './lib/facilities'
+import { queryAllFacilities, queryFacilitiesNearby, queryPollutantsForFacilities, getLastSyncDate, aggregateFacilityStats } from './lib/facilities'
 import { isNearMajorRoad } from './lib/roadways'
 import {
   METRO_DETROIT_CENTER,
@@ -52,7 +52,8 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [lastSyncDate, setLastSyncDate] = useState(null)
   const [showRoadways, setShowRoadways] = useState(true)
-  const [nearMajorRoad, setNearMajorRoad] = useState(null) // null = not checked, true/false after check
+  const [nearMajorRoad, setNearMajorRoad] = useState(null)
+  const [pollutantMap, setPollutantMap] = useState({}) // source_id -> [{ pollutant_desc }]
 
   const defaultCenter = isEmbed ? METRO_DETROIT_CENTER : MICHIGAN_CENTER
   const defaultZoom = isEmbed ? METRO_DETROIT_ZOOM : MICHIGAN_ZOOM
@@ -80,6 +81,9 @@ function App() {
       const data = await queryFacilitiesNearby(location.lat, location.lon, radius.meters)
       setNearbyFacilities(data)
       setStats(aggregateFacilityStats(data))
+      // Fetch regulated pollutants for nearby facilities
+      const ids = data.map(f => f.source_id)
+      queryPollutantsForFacilities(ids).then(setPollutantMap)
     } catch (err) {
       console.error('Failed to fetch facilities:', err)
       setNearbyFacilities([])
@@ -101,6 +105,22 @@ function App() {
     }
     const newUrl = `${window.location.pathname}?${params.toString()}`
     window.history.replaceState({}, '', newUrl)
+  }
+
+  function handleClear() {
+    setUserLocation(null)
+    setNearbyFacilities([])
+    setStats(null)
+    setNearMajorRoad(null)
+    setPollutantMap({})
+    // Reset URL
+    const params = new URLSearchParams(window.location.search)
+    params.delete('lat')
+    params.delete('lon')
+    params.delete('r')
+    params.delete('addr')
+    const clean = params.toString() ? `?${params}` : window.location.pathname
+    window.history.replaceState({}, '', clean)
   }
 
   function handleAddressResult(result) {
@@ -146,6 +166,11 @@ function App() {
         <div className="app-content">
           <div className="search-and-controls">
             <AddressSearch onResult={handleAddressResult} isLoading={loading} />
+            {userLocation && (
+              <button className="clear-button" onClick={handleClear}>
+                Clear search
+              </button>
+            )}
           </div>
 
           <nav className="tab-nav" role="tablist">
@@ -225,7 +250,7 @@ function App() {
               </div>
 
               {nearbyFacilities.length > 0 && !loading && (
-                <FacilityList facilities={nearbyFacilities} radiusIndex={radiusIndex} />
+                <FacilityList facilities={nearbyFacilities} radiusIndex={radiusIndex} pollutantMap={pollutantMap} />
               )}
             </>
           )}

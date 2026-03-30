@@ -5,7 +5,7 @@ import {
   getProgramLabel,
   getProgramUrl,
 } from '../lib/constants'
-import { parsePollutants } from '../lib/pollutants'
+import { parsePollutants, getPollutantInfo } from '../lib/pollutants'
 
 function getComplianceInfo(status) {
   return COMPLIANCE_COLORS[status] || COMPLIANCE_COLORS.unknown
@@ -39,7 +39,7 @@ function formatNumber(val) {
   return num.toLocaleString('en-US')
 }
 
-function FacilityCard({ facility }) {
+function FacilityCard({ facility, regulatedPollutants }) {
   const f = facility
   const compliance = getComplianceInfo(f.compliance_status)
   const industry = getIndustryLabel(f.naics)
@@ -100,6 +100,26 @@ function FacilityCard({ facility }) {
                   )}
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {regulatedPollutants && regulatedPollutants.length > 0 && (
+          <div className="card-section">
+            <h4>Regulated Pollutants</h4>
+            <p className="regulated-pollutants-note">This facility is permitted to emit:</p>
+            <div className="regulated-pollutants-list">
+              {regulatedPollutants.map(p => {
+                const info = getPollutantInfo(p.pollutant_desc)
+                return (
+                  <div key={p.pollutant_desc} className="regulated-pollutant-item">
+                    <span className="regulated-pollutant-name">{info?.name || p.pollutant_desc}</span>
+                    {info?.health && (
+                      <span className="regulated-pollutant-health">{info.health}</span>
+                    )}
+                  </div>
+                )
+              })}
             </div>
           </div>
         )}
@@ -175,7 +195,7 @@ function FacilityCard({ facility }) {
   )
 }
 
-export default function FacilityList({ facilities, radiusIndex }) {
+export default function FacilityList({ facilities, radiusIndex, pollutantMap }) {
   if (!facilities || facilities.length === 0) return null
 
   const radius = RADIUS_PRESETS[radiusIndex]
@@ -196,7 +216,7 @@ export default function FacilityList({ facilities, radiusIndex }) {
       </h2>
       <div className="list-cards">
         {sorted.map(f => (
-          <FacilityCard key={f.source_id} facility={f} />
+          <FacilityCard key={f.source_id} facility={f} regulatedPollutants={pollutantMap?.[f.source_id]} />
         ))}
       </div>
     </div>

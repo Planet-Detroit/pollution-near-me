@@ -37,6 +37,35 @@ export async function queryFacilitiesNearby(lat, lon, radiusMeters) {
 }
 
 /**
+ * Fetch regulated pollutants for a list of source_ids.
+ * Returns a map: source_id -> [{ pollutant_desc, cas_number }]
+ */
+export async function queryPollutantsForFacilities(sourceIds) {
+  if (!sourceIds || sourceIds.length === 0) return {}
+
+  const { data, error } = await supabase
+    .from('air_facility_pollutants')
+    .select('source_id, pollutant_desc, cas_number')
+    .in('source_id', sourceIds)
+
+  if (error) {
+    console.error('Pollutant query error:', error)
+    return {}
+  }
+
+  // Group by source_id
+  const map = {}
+  for (const row of data || []) {
+    if (!map[row.source_id]) map[row.source_id] = []
+    map[row.source_id].push({
+      pollutant_desc: row.pollutant_desc,
+      cas_number: row.cas_number,
+    })
+  }
+  return map
+}
+
+/**
  * Get the last sync date from the sync_log table.
  */
 export async function getLastSyncDate() {

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { geocodeAddress } from '../lib/geocoder'
 
-const PHOTON_URL = 'https://photon.komoot.io/api'
+const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search'
 
 export default function AddressSearch({ onResult, isLoading }) {
   const [address, setAddress] = useState('')
@@ -33,32 +33,49 @@ export default function AddressSearch({ onResult, isLoading }) {
     try {
       const params = new URLSearchParams({
         q: query,
+        format: 'json',
+        addressdetails: '1',
+        countrycodes: 'us',
+        'accept-language': 'en',
+        viewbox: '-90.5,41.5,-82.0,48.5', // Michigan bounding box
+        bounded: '0', // Prefer Michigan but don't exclude other results
         limit: '5',
-        lang: 'en',
-        lat: '42.35',   // Bias toward Michigan
-        lon: '-83.1',
-        zoom: '10',
       })
 
-      const resp = await fetch(`${PHOTON_URL}?${params}`)
+      const resp = await fetch(`${NOMINATIM_URL}?${params}`, {
+        headers: { 'User-Agent': 'AirPollutionNearMe/1.0 (planetdetroit.org)' },
+      })
       if (!resp.ok) return
 
       const data = await resp.json()
-      const results = (data.features || [])
-        .filter(f => {
-          const props = f.properties || {}
-          // Only show US results, preferably Michigan
-          return props.country === 'United States'
+      const results = data
+        .filter(r => {
+          // Prioritize addresses with house numbers or streets
+          const type = r.type || ''
+          const cls = r.class || ''
+          return cls === 'place' || cls === 'boundary' || cls === 'building'
+            || cls === 'highway' || type === 'house' || type === 'residential'
+            || r.address?.house_number
         })
-        .map(f => {
-          const p = f.properties || {}
-          const parts = [p.name, p.street, p.city, p.state, p.postcode].filter(Boolean)
+        .map(r => {
+          const a = r.address || {}
+          const stateCode = a.state_code?.toUpperCase() || null
+          // Build a clean display string
+          const parts = []
+          if (a.house_number && a.road) {
+            parts.push(`${a.house_number} ${a.road}`)
+          } else if (a.road) {
+            parts.push(a.road)
+          }
+          if (a.city || a.town || a.village) parts.push(a.city || a.town || a.village)
+          if (a.state) parts.push(a.state)
+          if (a.postcode) parts.push(a.postcode)
+
           return {
-            display: parts.join(', '),
-            lat: f.geometry?.coordinates?.[1],
-            lon: f.geometry?.coordinates?.[0],
-            state: p.state === 'Michigan' ? 'MI' : (p.state_code?.toUpperCase() || null),
-            city: p.city,
+            display: parts.length > 0 ? parts.join(', ') : r.display_name,
+            lat: parseFloat(r.lat),
+            lon: parseFloat(r.lon),
+            state: stateCode,
           }
         })
 
@@ -75,9 +92,9 @@ export default function AddressSearch({ onResult, isLoading }) {
     setAddress(value)
     setError(null)
 
-    // Debounce autocomplete requests (300ms)
+    // Debounce autocomplete requests (400ms, respects Nominatim 1 req/sec policy)
     clearTimeout(debounceRef.current)
-    debounceRef.current = setTimeout(() => fetchSuggestions(value), 300)
+    debounceRef.current = setTimeout(() => fetchSuggestions(value), 400)
   }
 
   function handleKeyDown(e) {

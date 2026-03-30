@@ -26,9 +26,9 @@ describe('Constants', () => {
     }
   })
 
-  it('default radius index points to "My neighborhood" (1 mile)', () => {
-    expect(RADIUS_PRESETS[DEFAULT_RADIUS_INDEX].miles).toBe(1)
-    expect(RADIUS_PRESETS[DEFAULT_RADIUS_INDEX].label).toBe('My neighborhood')
+  it('default radius index points to "My area" (3 miles)', () => {
+    expect(RADIUS_PRESETS[DEFAULT_RADIUS_INDEX].miles).toBe(3)
+    expect(RADIUS_PRESETS[DEFAULT_RADIUS_INDEX].label).toBe('My area')
   })
 
   it('compliance colors cover all expected statuses', () => {

@@ -10,7 +10,7 @@ export const RADIUS_PRESETS = [
   { label: 'My neighborhood', miles: 1, meters: 1609.34 },
   { label: 'My area', miles: 3, meters: 4828.03 },
 ]
-export const DEFAULT_RADIUS_INDEX = 1 // "My neighborhood" (1 mile)
+export const DEFAULT_RADIUS_INDEX = 2 // "My area" (3 miles)
 
 // Compliance status colors and labels
 export const COMPLIANCE_COLORS = {

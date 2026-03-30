@@ -28,7 +28,7 @@ This project builds on the pioneering work of **[Shelby Jouppi](https://www.shel
 
 ```html
 <iframe
-  src="https://pollution-near-me.vercel.app/?embed=true"
+  src="https://air.planetdetroit.org/?embed=true"
   width="100%"
   height="900"
   frameborder="0"

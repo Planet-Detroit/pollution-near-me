@@ -6,7 +6,7 @@ export default function About() {
       <section className="about-section">
         <h3>What this is</h3>
         <p>
-          Pollution Near Me is a free tool built by{' '}
+          Air Pollution Near Me is a free tool built by{' '}
           <a href="https://planetdetroit.org" target="_blank" rel="noopener noreferrer">Planet Detroit</a>,
           an independent nonprofit newsroom covering environmental and climate issues in Michigan.
           It shows you which facilities near your home are permitted to release air pollutants,

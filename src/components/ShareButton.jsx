@@ -21,7 +21,7 @@ export default function ShareButton({ url, address, lat, lon, stats }) {
       ? `${stats.total} regulated facilities within 3 miles. ${stats.hpv} with high priority violations, ${stats.recentViolation} with recent violations.`
       : `See air pollution sources near this Michigan address.`
 
-    document.title = `${title} | Pollution Near Me`
+    document.title = `${title} | Air Pollution Near Me`
 
     setMetaTag('og:title', title)
     setMetaTag('og:description', description)
@@ -67,7 +67,7 @@ export default function ShareButton({ url, address, lat, lon, stats }) {
 
   function getEmbedCode() {
     const embedUrl = url.includes('?') ? `${url}&embed=true` : `${url}?embed=true`
-    return `<iframe src="${embedUrl}" width="100%" height="800" frameborder="0" title="Pollution Near Me"></iframe>`
+    return `<iframe src="${embedUrl}" width="100%" height="800" frameborder="0" title="Air Pollution Near Me"></iframe>`
   }
 
   async function copyEmbed() {

@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, CircleMarker, Circle, Marker, Popup, useMap } 
 import L from 'leaflet'
 import { COMPLIANCE_COLORS, CLASSIFICATION_SIZES, DEFAULT_MARKER_SIZE } from '../lib/constants'
 import FacilityPopup from './FacilityPopup'
+import RoadwayLayer from './RoadwayLayer'
 
 // Fix Leaflet default marker icon issue with bundlers
 delete L.Icon.Default.prototype._getIconUrl
@@ -73,6 +74,7 @@ export default function FacilityMap({
   nearbyFacilities,
   userLocation,
   radiusMeters,
+  showRoadways,
 }) {
   // Build a set of nearby source_ids for fast lookup
   const nearbyIds = new Set((nearbyFacilities || []).map(f => f.source_id))
@@ -89,6 +91,8 @@ export default function FacilityMap({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
+      <RoadwayLayer visible={showRoadways} />
 
       <MapController
         center={center}

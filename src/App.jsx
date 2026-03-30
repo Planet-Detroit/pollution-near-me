@@ -12,6 +12,7 @@ import ShareButton from './components/ShareButton'
 import PDHeader from './components/PDHeader'
 import PDFooter from './components/PDFooter'
 import { queryAllFacilities, queryFacilitiesNearby, getLastSyncDate, aggregateFacilityStats } from './lib/facilities'
+import { isNearMajorRoad } from './lib/roadways'
 import {
   METRO_DETROIT_CENTER,
   MICHIGAN_CENTER,
@@ -50,6 +51,8 @@ function App() {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(false)
   const [lastSyncDate, setLastSyncDate] = useState(null)
+  const [showRoadways, setShowRoadways] = useState(true)
+  const [nearMajorRoad, setNearMajorRoad] = useState(null) // null = not checked, true/false after check
 
   const defaultCenter = isEmbed ? METRO_DETROIT_CENTER : MICHIGAN_CENTER
   const defaultZoom = isEmbed ? METRO_DETROIT_ZOOM : MICHIGAN_ZOOM
@@ -104,6 +107,8 @@ function App() {
     setActiveTab('map')
     fetchNearby(result, radiusIndex)
     updateUrl(result, radiusIndex)
+    // Check road proximity
+    isNearMajorRoad(result.lat, result.lon).then(setNearMajorRoad)
   }
 
   function handleRadiusChange(index) {
@@ -131,7 +136,7 @@ function App() {
     <div className={`app ${isEmbed ? 'embed-mode' : ''}`}>
       {!isEmbed && (
         <PDHeader
-          title="Pollution Near Me"
+          title="Air Pollution Near Me"
           subtitle="See air pollution sources near your Michigan address"
         />
       )}
@@ -179,6 +184,7 @@ function App() {
                   nearbyFacilities={nearbyFacilities}
                   userLocation={userLocation}
                   radiusMeters={RADIUS_PRESETS[radiusIndex].meters}
+                  showRoadways={showRoadways}
                 />
 
                 {loading && (
@@ -187,7 +193,26 @@ function App() {
                   </div>
                 )}
 
-                <MapLegend />
+                <div className="map-controls-bar">
+                  <MapLegend />
+                  <label className="roadway-toggle">
+                    <input
+                      type="checkbox"
+                      checked={showRoadways}
+                      onChange={(e) => setShowRoadways(e.target.checked)}
+                    />
+                    Show major roadway health impact zones (500m)
+                  </label>
+                </div>
+
+                {nearMajorRoad === true && userLocation && (
+                  <div className="road-alert">
+                    <strong>You are within 500 meters of a major roadway.</strong>{' '}
+                    Research links living this close to highways and high-traffic roads to increased
+                    risk of asthma, heart disease, and other health effects due to traffic-related
+                    air pollution (EPA, Health Effects Institute).
+                  </div>
+                )}
 
                 {stats && !loading && (
                   <SummaryPanel
@@ -214,7 +239,7 @@ function App() {
 
       {!isEmbed && (
         <PDFooter
-          toolName="Pollution Near Me"
+          toolName="Air Pollution Near Me"
           toolCredits="Inspired by Shelby Jouppi's air permit violation dashboard"
         />
       )}

@@ -22,12 +22,12 @@ export const COMPLIANCE_COLORS = {
 
 // Facility classification sizes (marker radius in pixels)
 export const CLASSIFICATION_SIZES = {
-  'Major Emissions': 10,
-  'Synthetic Minor Emissions': 7,
-  '80% Synthetic Minor Emissions': 7,
-  'Minor Emissions': 5,
+  'Major Emissions': 14,
+  'Synthetic Minor Emissions': 10,
+  '80% Synthetic Minor Emissions': 10,
+  'Minor Emissions': 8,
 }
-export const DEFAULT_MARKER_SIZE = 5
+export const DEFAULT_MARKER_SIZE = 8
 
 // Translate ECHO program codes to plain English
 export const PROGRAM_LABELS = {

@@ -6,6 +6,7 @@ import SummaryPanel from './components/SummaryPanel'
 import FacilityList from './components/FacilityList'
 import Glossary from './components/Glossary'
 import Disclaimer from './components/Disclaimer'
+import MapLegend from './components/MapLegend'
 import PDHeader from './components/PDHeader'
 import PDFooter from './components/PDFooter'
 import { queryFacilitiesNearby, getLastSyncDate, aggregateFacilityStats } from './lib/facilities'
@@ -124,6 +125,8 @@ function App() {
                     <p>Finding facilities near you...</p>
                   </div>
                 )}
+
+                <MapLegend />
 
                 {stats && !loading && (
                   <SummaryPanel

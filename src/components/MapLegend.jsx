@@ -8,9 +8,21 @@ const STATUS_ITEMS = [
 ]
 
 const SIZE_ITEMS = [
-  { label: 'Major source', size: CLASSIFICATION_SIZES['Major Emissions'] },
-  { label: 'Synthetic minor', size: CLASSIFICATION_SIZES['Synthetic Minor Emissions'] },
-  { label: 'Minor source', size: CLASSIFICATION_SIZES['Minor Emissions'] },
+  {
+    label: 'Major source',
+    size: CLASSIFICATION_SIZES['Major Emissions'],
+    tooltip: 'Emits or could emit 100+ tons/year of a regulated pollutant, or 10+ tons/year of a single hazardous air pollutant. Subject to the strictest regulations including Title V permits.',
+  },
+  {
+    label: 'Synthetic minor',
+    size: CLASSIFICATION_SIZES['Synthetic Minor Emissions'],
+    tooltip: 'Could qualify as Major based on equipment capacity, but has accepted enforceable permit limits to keep emissions below Major thresholds.',
+  },
+  {
+    label: 'Minor source',
+    size: CLASSIFICATION_SIZES['Minor Emissions'],
+    tooltip: 'Actual and potential emissions are below Major source thresholds. Still regulated but with less stringent permitting requirements.',
+  },
 ]
 
 export default function MapLegend() {
@@ -43,8 +55,8 @@ export default function MapLegend() {
       <div className="legend-section">
         <h4 className="legend-heading">Facility Size (emissions potential)</h4>
         <div className="legend-items">
-          {SIZE_ITEMS.map(({ label, size }) => (
-            <div key={label} className="legend-item">
+          {SIZE_ITEMS.map(({ label, size, tooltip }) => (
+            <div key={label} className="legend-item legend-item-with-tooltip">
               <svg width={28} height={28} className="legend-dot">
                 <circle
                   cx={14}
@@ -57,6 +69,10 @@ export default function MapLegend() {
                 />
               </svg>
               <span className="legend-label">{label}</span>
+              <span className="legend-tooltip-trigger" aria-label={tooltip}>
+                ?
+                <span className="legend-tooltip">{tooltip}</span>
+              </span>
             </div>
           ))}
         </div>

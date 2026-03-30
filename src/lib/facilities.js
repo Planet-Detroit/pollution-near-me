@@ -1,8 +1,25 @@
 import { supabase } from './supabaseClient'
 
 /**
+ * Fetch ALL Michigan facilities (for initial map display).
+ * Only fetches the columns needed for map markers, not full detail.
+ */
+export async function queryAllFacilities() {
+  const { data, error } = await supabase
+    .from('air_facilities')
+    .select('source_id,facility_name,lat,lon,compliance_status,classification,air_status')
+
+  if (error) {
+    console.error('Supabase query error:', error)
+    throw new Error('Failed to query facilities')
+  }
+
+  return data || []
+}
+
+/**
  * Query facilities within a given radius (in meters) of a point.
- * Uses PostGIS ST_DWithin via an RPC function for performance.
+ * Returns full detail for the nearby facilities.
  */
 export async function queryFacilitiesNearby(lat, lon, radiusMeters) {
   const { data, error } = await supabase.rpc('facilities_within_radius', {

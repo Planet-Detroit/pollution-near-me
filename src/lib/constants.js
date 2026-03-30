@@ -1,8 +1,8 @@
 // Map center coordinates
 export const METRO_DETROIT_CENTER = [42.35, -83.1]
-export const MICHIGAN_CENTER = [44.3, -84.7]
+export const MICHIGAN_CENTER = [44.5, -84.7]
 export const METRO_DETROIT_ZOOM = 10
-export const MICHIGAN_ZOOM = 7
+export const MICHIGAN_ZOOM = 6
 
 // Search radius presets (in miles)
 export const RADIUS_PRESETS = [

@@ -1,0 +1,146 @@
+export default function About() {
+  return (
+    <div className="about-page">
+      <h2>About This Tool</h2>
+
+      <section className="about-section">
+        <h3>What this is</h3>
+        <p>
+          Pollution Near Me is a free tool built by{' '}
+          <a href="https://planetdetroit.org" target="_blank" rel="noopener noreferrer">Planet Detroit</a>,
+          an independent nonprofit newsroom covering environmental and climate issues in Michigan.
+          It shows you which facilities near your home are permitted to release air pollutants,
+          whether those facilities have been cited for violations, and what pollutants are involved.
+        </p>
+        <p>
+          The tool displays all 3,481 facilities in Michigan that are regulated under the federal
+          Clean Air Act. These include power plants, refineries, factories, landfills, and other
+          industrial operations that emit pollutants into the air.
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h3>What this is not</h3>
+        <p>
+          This tool <strong>does not measure the air quality at your location</strong>. It shows
+          regulatory data &mdash; which facilities have permits, and whether they've been cited for
+          violations. Actual air quality at your home depends on many factors including wind direction,
+          weather, stack height, and distance.
+        </p>
+        <p>
+          A facility with no violations is not necessarily "clean" &mdash; it still has permits to
+          emit pollutants. It means regulators have not cited it for exceeding its permitted limits
+          or breaking other rules.
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h3>Where the data comes from</h3>
+        <p>
+          All facility and compliance data comes from the U.S. Environmental Protection Agency's{' '}
+          <a href="https://echo.epa.gov/" target="_blank" rel="noopener noreferrer">
+            ECHO (Enforcement and Compliance History Online)
+          </a>{' '}
+          database, which tracks permits, inspections, violations, and enforcement actions for
+          facilities regulated under the Clean Air Act.
+        </p>
+        <p>
+          Our database is updated nightly from EPA ECHO. Address lookups use{' '}
+          <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h3>A note on data timeliness</h3>
+        <p>
+          There can be a lag between when a violation occurs and when it appears in EPA's database.
+          Michigan's Department of Environment, Great Lakes, and Energy (EGLE) conducts inspections
+          and issues violations at the state level, then reports to EPA. This process can take weeks
+          or months.
+        </p>
+        <p>
+          EPA has noted data discrepancies between ECHO and Michigan's own records. For the most
+          current information about a specific facility, we recommend checking the{' '}
+          <a href="https://echo.epa.gov/" target="_blank" rel="noopener noreferrer">
+            EPA ECHO facility detail page
+          </a>{' '}
+          (linked from each facility card) and contacting{' '}
+          <a href="https://www.michigan.gov/egle/about/organization/air-quality" target="_blank" rel="noopener noreferrer">
+            EGLE's Air Quality Division
+          </a>{' '}
+          directly.
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h3>How to use this tool</h3>
+        <ol>
+          <li><strong>Search your address</strong> to see regulated facilities near you</li>
+          <li><strong>Look at the colors:</strong> Red markers indicate high priority violations (the most serious).
+            Orange markers indicate recent violations. Black markers indicate no violations identified.</li>
+          <li><strong>Look at the sizes:</strong> Larger circles are Major sources &mdash; facilities with the highest
+            emissions potential. Hover over the legend items for definitions.</li>
+          <li><strong>Click any marker</strong> for a quick summary, then scroll down for full details
+            including violation history, pollutants of concern with health information, enforcement
+            actions, and permits</li>
+          <li><strong>Adjust the radius</strong> to see more or fewer facilities</li>
+          <li><strong>Check the Glossary tab</strong> if you encounter unfamiliar terms</li>
+          <li><strong>Share your results</strong> with neighbors, local officials, or on social media</li>
+        </ol>
+      </section>
+
+      <section className="about-section">
+        <h3>What you can do</h3>
+        <ul>
+          <li>Learn what facilities operate near you and what they are permitted to release</li>
+          <li>Attend public hearings when facilities apply for new or renewed permits</li>
+          <li>Contact your{' '}
+            <a href="https://www.house.mi.gov/MHRPublic/frmFindaRep.aspx" target="_blank" rel="noopener noreferrer">
+              state representative
+            </a>{' '}
+            or{' '}
+            <a href="https://www.senate.michigan.gov/fysbyaddress.html" target="_blank" rel="noopener noreferrer">
+              state senator
+            </a>{' '}
+            about air quality concerns in your community
+          </li>
+          <li>File a complaint with{' '}
+            <a href="https://www.michigan.gov/egle/about/contact/pollution-complaints" target="_blank" rel="noopener noreferrer">
+              EGLE
+            </a>{' '}
+            if you observe pollution (odors, visible emissions, dust)
+          </li>
+          <li>Follow <a href="https://planetdetroit.org" target="_blank" rel="noopener noreferrer">Planet Detroit</a> for
+            ongoing environmental reporting in Michigan
+          </li>
+        </ul>
+      </section>
+
+      <section className="about-section">
+        <h3>Credits</h3>
+        <p>
+          This project builds on the pioneering work of data journalist{' '}
+          <a href="https://www.shelbyjouppi.com" target="_blank" rel="noopener noreferrer">Shelby Jouppi</a>,
+          whose{' '}
+          <a href="https://github.com/Planet-Detroit/air-permit-violation-dashboard" target="_blank" rel="noopener noreferrer">
+            air permit violation dashboard
+          </a>{' '}
+          first made Michigan's air quality enforcement data accessible to the public.
+        </p>
+        <p>
+          Built by <a href="https://planetdetroit.org" target="_blank" rel="noopener noreferrer">Planet Detroit</a>.
+          Code is open source on{' '}
+          <a href="https://github.com/Planet-Detroit/pollution-near-me" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h3>Contact</h3>
+        <p>
+          Questions, corrections, or feedback? Email us at{' '}
+          <a href="mailto:info@planetdetroit.org">info@planetdetroit.org</a>.
+        </p>
+      </section>
+    </div>
+  )
+}

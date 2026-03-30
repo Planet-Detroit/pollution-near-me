@@ -5,6 +5,7 @@ import RadiusSelector from './components/RadiusSelector'
 import SummaryPanel from './components/SummaryPanel'
 import FacilityList from './components/FacilityList'
 import Glossary from './components/Glossary'
+import About from './components/About'
 import Disclaimer from './components/Disclaimer'
 import MapLegend from './components/MapLegend'
 import ShareButton from './components/ShareButton'
@@ -22,6 +23,7 @@ import {
 
 const TABS = [
   { id: 'map', label: 'Map' },
+  { id: 'about', label: 'About' },
   { id: 'glossary', label: 'Glossary' },
 ]
 
@@ -202,9 +204,9 @@ function App() {
             </>
           )}
 
-          {activeTab === 'glossary' && (
-            <Glossary />
-          )}
+          {activeTab === 'about' && <About />}
+
+          {activeTab === 'glossary' && <Glossary />}
 
           <Disclaimer />
         </div>

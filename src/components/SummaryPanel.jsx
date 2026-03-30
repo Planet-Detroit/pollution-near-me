@@ -28,7 +28,7 @@ export default function SummaryPanel({ stats, radiusIndex, lastSyncDate }) {
                 style={{ backgroundColor: COMPLIANCE_COLORS['High Priority Violation'].color }}
               />
               <span className="stat-count">{stats.hpv}</span>
-              <span className="stat-label">High Priority Violations</span>
+              <span className="stat-label">High Priority Violations (most serious)</span>
             </div>
             <div className="summary-stat">
               <span

@@ -79,7 +79,7 @@ function FacilityCard({ facility }) {
               <p>Most recent: {formatDate(f.last_violation_date)}</p>
             )}
             {f.months_with_hpv > 0 && (
-              <p>In HPV status for {f.months_with_hpv} month{f.months_with_hpv !== 1 ? 's' : ''}</p>
+              <p>In High Priority Violation status for {f.months_with_hpv} month{f.months_with_hpv !== 1 ? 's' : ''}</p>
             )}
           </div>
         )}

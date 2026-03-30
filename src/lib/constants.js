@@ -14,7 +14,7 @@ export const DEFAULT_RADIUS_INDEX = 2 // "My area" (3 miles)
 
 // Compliance status colors and labels
 export const COMPLIANCE_COLORS = {
-  'High Priority Violation': { color: '#dc2626', label: 'High Priority Violation', shortLabel: 'HPV' },
+  'High Priority Violation': { color: '#dc2626', label: 'High Priority Violation', shortLabel: 'High Priority Violation' },
   'Violation w/in 1 Year': { color: '#f97316', label: 'Violation Within Past Year', shortLabel: 'Recent Violation' },
   'No Violation Identified': { color: '#333333', label: 'No Violations Identified', shortLabel: 'No Violations' },
   unknown: { color: '#9ca3af', label: 'Status Unknown', shortLabel: 'Unknown' },

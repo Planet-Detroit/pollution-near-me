@@ -9,6 +9,7 @@ function getStaticMapUrl(lat, lon) {
 
 export default function ShareButton({ url, address, lat, lon, stats }) {
   const [copied, setCopied] = useState(false)
+  const [embedCopied, setEmbedCopied] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
 
   // Update OG meta tags when address changes (for social crawlers on shared links)
@@ -64,6 +65,27 @@ export default function ShareButton({ url, address, lat, lon, stats }) {
     setShowMenu(false)
   }
 
+  function getEmbedCode() {
+    const embedUrl = url.includes('?') ? `${url}&embed=true` : `${url}?embed=true`
+    return `<iframe src="${embedUrl}" width="100%" height="800" frameborder="0" title="Pollution Near Me"></iframe>`
+  }
+
+  async function copyEmbed() {
+    try {
+      await navigator.clipboard.writeText(getEmbedCode())
+    } catch {
+      const input = document.createElement('textarea')
+      input.value = getEmbedCode()
+      document.body.appendChild(input)
+      input.select()
+      document.execCommand('copy')
+      document.body.removeChild(input)
+    }
+    setEmbedCopied(true)
+    setTimeout(() => setEmbedCopied(false), 2000)
+    setShowMenu(false)
+  }
+
   function shareToX() {
     const text = encodeURIComponent(shareText)
     const link = encodeURIComponent(url)
@@ -106,6 +128,9 @@ export default function ShareButton({ url, address, lat, lon, stats }) {
           </button>
           <button className="share-option" onClick={shareToBluesky}>
             Share on Bluesky
+          </button>
+          <button className="share-option share-option-embed" onClick={copyEmbed}>
+            {embedCopied ? 'Embed code copied!' : 'Copy embed code'}
           </button>
         </div>
       )}

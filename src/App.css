@@ -388,6 +388,12 @@ body {
   background: #f0f7ff;
 }
 
+.share-option-embed {
+  border-top: 2px solid var(--pd-border);
+  font-size: 12px;
+  color: var(--pd-text-muted);
+}
+
 /* -- Map ------------------------------------ */
 
 .map-and-summary {

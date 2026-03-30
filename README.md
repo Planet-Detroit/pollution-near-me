@@ -30,7 +30,7 @@ This project builds on the pioneering work of **[Shelby Jouppi](https://www.shel
 <iframe
   src="https://pollution-near-me.vercel.app/?embed=true"
   width="100%"
-  height="700"
+  height="900"
   frameborder="0"
   title="Pollution Near Me - Find air pollution sources near your address"
 ></iframe>

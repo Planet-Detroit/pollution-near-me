@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Embed Test — Planet Detroit Article</title>
+  <style>
+    body {
+      max-width: 780px;
+      margin: 40px auto;
+      padding: 0 20px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #111;
+    }
+    h1 { font-family: -apple-system, Arial, sans-serif; font-size: 32px; }
+    .byline { color: #666; font-size: 14px; font-family: Arial, sans-serif; }
+    .embed-wrapper { margin: 30px -20px; }
+    iframe { display: block; }
+  </style>
+</head>
+<body>
+  <h1>What's polluting the air near your home?</h1>
+  <p class="byline">By Planet Detroit Staff | March 30, 2026</p>
+
+  <p>Michigan is home to more than 3,400 facilities regulated under the federal Clean Air Act — refineries, power plants, factories, and landfills that are permitted to release pollutants into the air. But do you know which ones are near you?</p>
+
+  <p>Use the tool below to search your address and see what's nearby.</p>
+
+  <div class="embed-wrapper">
+    <iframe
+      src="http://localhost:5173/?embed=true"
+      width="100%"
+      height="900"
+      frameborder="0"
+      title="Pollution Near Me — Find air pollution sources near your address"
+    ></iframe>
+  </div>
+
+  <p>The data comes from the EPA's enforcement database and is updated nightly. For more on how to read this data, click the About and Glossary tabs within the tool.</p>
+</body>
+</html>

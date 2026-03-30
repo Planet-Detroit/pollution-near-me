@@ -1,34 +1,8 @@
-const CENSUS_GEOCODER_URL = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress'
 const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search'
 
 /**
- * Geocode via Census Bureau (primary). Free, no API key.
- */
-async function geocodeCensus(address) {
-  const params = new URLSearchParams({
-    address,
-    benchmark: 'Public_AR_Current',
-    format: 'json',
-  })
-
-  const response = await fetch(`${CENSUS_GEOCODER_URL}?${params}`)
-  if (!response.ok) return null
-
-  const data = await response.json()
-  const matches = data.result?.addressMatches
-
-  if (!matches || matches.length === 0) return null
-
-  const match = matches[0]
-  const { x: lon, y: lat } = match.coordinates
-  const state = match.addressComponents?.state
-
-  return { lat, lon, matchedAddress: match.matchedAddress, state }
-}
-
-/**
- * Geocode via OpenStreetMap Nominatim (fallback). Free, no API key.
- * Rate limit: 1 req/sec. We only hit this if Census fails.
+ * Geocode via OpenStreetMap Nominatim. Free, no API key, CORS-friendly.
+ * Rate limit: 1 req/sec.
  */
 async function geocodeNominatim(address) {
   const params = new URLSearchParams({
@@ -59,25 +33,18 @@ async function geocodeNominatim(address) {
 }
 
 /**
- * Geocode an address. Tries Census Bureau first, falls back to OpenStreetMap.
+ * Geocode an address using OpenStreetMap Nominatim.
  * Returns { lat, lon, matchedAddress, state } or null if no match.
+ *
+ * Note: Census Bureau geocoder doesn't support CORS for browser requests,
+ * so we use Nominatim as the primary geocoder. If a server-side proxy is
+ * added later, Census can be re-added as a secondary option.
  */
 export async function geocodeAddress(address) {
-  // Try Census first
   try {
-    const result = await geocodeCensus(address)
-    if (result) return result
+    return await geocodeNominatim(address)
   } catch (err) {
-    console.warn('Census geocoder failed, trying OpenStreetMap:', err.message)
+    console.warn('Geocoding failed:', err.message)
+    return null
   }
-
-  // Fall back to Nominatim
-  try {
-    const result = await geocodeNominatim(address)
-    if (result) return result
-  } catch (err) {
-    console.warn('OpenStreetMap geocoder also failed:', err.message)
-  }
-
-  return null
 }

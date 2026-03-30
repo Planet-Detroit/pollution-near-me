@@ -18,10 +18,24 @@ function MapController({ center, zoom, userLocation, radiusMeters }) {
 
   useEffect(() => {
     if (userLocation) {
-      // Fit map to the radius circle with some padding
-      const circle = L.circle([userLocation.lat, userLocation.lon], { radius: radiusMeters })
-      const bounds = circle.getBounds()
-      map.fitBounds(bounds, { padding: [30, 30] })
+      // Wait for map to be ready before fitting bounds
+      const fitToRadius = () => {
+        try {
+          const circle = L.circle([userLocation.lat, userLocation.lon], { radius: radiusMeters })
+          circle.addTo(map)
+          map.fitBounds(circle.getBounds(), { padding: [30, 30] })
+          circle.remove()
+        } catch (err) {
+          // Fallback: just center on the location
+          map.setView([userLocation.lat, userLocation.lon], 13)
+        }
+      }
+
+      if (map.getSize().x > 0) {
+        fitToRadius()
+      } else {
+        map.whenReady(fitToRadius)
+      }
     } else {
       map.setView(center, zoom)
     }

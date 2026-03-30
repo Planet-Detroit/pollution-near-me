@@ -340,6 +340,225 @@
   text-decoration: underline;
 }
 
+/* -- Facility List -------------------------- */
+
+.facility-list {
+  margin-top: 16px;
+}
+
+.list-title {
+  font-family: 'Asap', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.list-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.facility-card {
+  border: 1px solid #e5e5e5;
+  border-left: 4px solid;
+  border-radius: 6px;
+  padding: 16px;
+  background: #fff;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.card-name {
+  font-family: 'Asap', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+}
+
+.card-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-industry {
+  font-size: 14px;
+  color: #515151;
+  font-style: italic;
+  margin: 0 0 4px;
+}
+
+.card-address {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 12px;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-section {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.card-section h4 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #999;
+  margin: 0 0 2px;
+}
+
+.card-section p {
+  margin: 2px 0;
+}
+
+.card-violations {
+  background: #fef2f2;
+  padding: 8px 10px;
+  border-radius: 4px;
+}
+
+.card-pollutants {
+  font-weight: 600;
+}
+
+.card-programs {
+  margin: 2px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: #515151;
+}
+
+.card-programs li {
+  margin: 1px 0;
+}
+
+.card-links {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.card-links a {
+  color: #2f80c3;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.card-links a:hover {
+  text-decoration: underline;
+}
+
+/* -- Glossary ------------------------------- */
+
+.glossary {
+  margin-top: 8px;
+}
+
+.glossary-toggle {
+  background: none;
+  border: none;
+  color: #2f80c3;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.glossary-toggle:hover {
+  text-decoration: underline;
+}
+
+.glossary-arrow {
+  font-size: 10px;
+}
+
+.glossary-content {
+  background: #f9fafb;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 8px;
+}
+
+.glossary-title {
+  font-family: 'Asap', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.glossary-intro {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 12px;
+}
+
+.glossary-list {
+  margin: 0;
+}
+
+.glossary-item {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.glossary-item:last-child {
+  border-bottom: none;
+}
+
+.glossary-term {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.glossary-term:hover {
+  color: #2f80c3;
+}
+
+.glossary-expand {
+  font-size: 16px;
+  color: #999;
+  width: 20px;
+  text-align: center;
+}
+
+.glossary-definition {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0 0 10px;
+  padding-left: 0;
+}
+
 /* -- Disclaimer ----------------------------- */
 
 .disclaimer {

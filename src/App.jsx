@@ -3,6 +3,8 @@ import AddressSearch from './components/AddressSearch'
 import FacilityMap from './components/FacilityMap'
 import RadiusSelector from './components/RadiusSelector'
 import SummaryPanel from './components/SummaryPanel'
+import FacilityList from './components/FacilityList'
+import Glossary from './components/Glossary'
 import Disclaimer from './components/Disclaimer'
 import { queryFacilitiesNearby, getLastSyncDate, aggregateFacilityStats } from './lib/facilities'
 import {
@@ -113,6 +115,11 @@ function App() {
           )}
         </div>
 
+        {facilities.length > 0 && !loading && (
+          <FacilityList facilities={facilities} radiusIndex={radiusIndex} />
+        )}
+
+        <Glossary />
         <Disclaimer />
       </div>
     </div>

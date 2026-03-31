@@ -168,6 +168,7 @@ function FacilityCard({ facility, regulatedPollutants }) {
             <h4>Reported Emissions</h4>
             {triReleases && <p>Toxic air releases (TRI): {triReleases} lbs/year</p>}
             {ghgReleases && <p>Greenhouse gas (CO2): {ghgReleases} metric tons/year</p>}
+            <p className="emissions-note">Self-reported by facility to EPA. Not independently verified.</p>
           </div>
         )}
 

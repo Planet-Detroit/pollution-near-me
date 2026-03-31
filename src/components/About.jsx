@@ -23,14 +23,46 @@ export default function About() {
         <h3>What this is not</h3>
         <p>
           This tool <strong>does not measure the air quality at your location</strong>. It shows
-          regulatory data &mdash; which facilities have permits, and whether they've been cited for
-          violations. Actual air quality at your home depends on many factors including wind direction,
-          weather, stack height, and distance.
+          federal regulatory data &mdash; which facilities have permits, and whether they've been
+          cited for violations. Actual air quality at your home depends on many factors including
+          wind direction, weather, stack height, and distance.
         </p>
         <p>
-          A facility with no violations is not necessarily "clean" &mdash; it still has permits to
-          emit pollutants. It means regulators have not cited it for exceeding its permitted limits
-          or breaking other rules.
+          A facility with no violations is not necessarily &ldquo;clean&rdquo; &mdash; it still has
+          permits to emit pollutants. In some cases, a facility may never have been inspected. When
+          you see &ldquo;No Violations Identified,&rdquo; it means regulators have not cited it for
+          violations &mdash; not that the facility has been evaluated and found to be in compliance.
+        </p>
+        <p>
+          <strong>This tool only shows facilities tracked in EPA&rsquo;s federal ECHO database</strong> under
+          the Clean Air Act. It does not include:
+        </p>
+        <ul>
+          <li>
+            <strong>State-regulated sources</strong> &mdash; Michigan&rsquo;s EGLE regulates many
+            additional air pollution sources under state law that don&rsquo;t appear in federal data,
+            including fugitive dust sources (asphalt plants, gravel pits, construction sites),
+            small commercial operations (dry cleaners, auto body shops), and facilities operating
+            under Michigan&rsquo;s{' '}
+            <a href="https://www.michigan.gov/egle/about/organization/air-quality/air-permits" target="_blank" rel="noopener noreferrer">
+              Rule 290 permit-by-rule exemptions
+            </a>
+          </li>
+          <li>
+            <strong>Water pollution sources</strong> (NPDES permits)
+          </li>
+          <li>
+            <strong>Contaminated sites</strong> (Superfund, brownfields)
+          </li>
+          <li>
+            <strong>Hazardous waste facilities</strong> (RCRA)
+          </li>
+        </ul>
+        <p>
+          For a broader view of regulated facilities in Michigan, consult{' '}
+          <a href="https://www.michigan.gov/egle/about/organization/air-quality" target="_blank" rel="noopener noreferrer">
+            EGLE&rsquo;s Air Quality Division
+          </a>.
         </p>
       </section>
 
@@ -86,16 +118,27 @@ export default function About() {
           or months.
         </p>
         <p>
-          EPA has noted data discrepancies between ECHO and Michigan's own records. For the most
+          EPA has noted data discrepancies between ECHO and Michigan&rsquo;s own records. For the most
           current information about a specific facility, we recommend checking the{' '}
           <a href="https://echo.epa.gov/" target="_blank" rel="noopener noreferrer">
             EPA ECHO facility detail page
           </a>{' '}
           (linked from each facility card) and contacting{' '}
           <a href="https://www.michigan.gov/egle/about/organization/air-quality" target="_blank" rel="noopener noreferrer">
-            EGLE's Air Quality Division
+            EGLE&rsquo;s Air Quality Division
           </a>{' '}
           directly.
+        </p>
+        <p>
+          <strong>Facility locations are approximate.</strong> The coordinates in EPA&rsquo;s database
+          may reflect a building centroid or general area rather than the exact facility footprint. At
+          close zoom levels, a facility&rsquo;s actual location may differ from its marker position by
+          several hundred meters.
+        </p>
+        <p>
+          <strong>Emissions data is self-reported.</strong> The toxic air release (TRI) and greenhouse
+          gas figures shown on facility cards are reported by the facilities themselves to EPA. They
+          are not independently measured or verified.
         </p>
       </section>
 

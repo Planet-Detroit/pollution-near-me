@@ -855,6 +855,13 @@ body {
   margin-top: 6px;
 }
 
+.emissions-note {
+  font-size: 12px;
+  color: var(--pd-text-muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+
 /* -- Pollutant Descriptions (popup + cards) - */
 
 /* -- Regulated Pollutants ------------------- */

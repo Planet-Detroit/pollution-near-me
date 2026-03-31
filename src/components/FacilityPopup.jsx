@@ -44,6 +44,15 @@ export default function FacilityPopup({ facility }) {
         </p>
       )}
 
+      {f.compliance_status === 'No Violation Identified' && f.evaluation_count !== undefined && (
+        <p className="popup-hpv-note">
+          {f.evaluation_count > 0
+            ? `${f.evaluation_count} compliance evaluation${f.evaluation_count !== 1 ? 's' : ''} on record`
+            : 'No compliance evaluations on record'
+          }
+        </p>
+      )}
+
       {pollutants.length > 0 && (
         <p className="popup-pollutant-names">
           {pollutants.map(p => p.info?.name || p.raw).join(', ')}

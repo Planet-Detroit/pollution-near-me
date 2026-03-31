@@ -14,6 +14,7 @@ export async function queryAllFacilities() {
     const { data, error } = await supabase
       .from('air_facilities')
       .select('source_id,facility_name,lat,lon,compliance_status,hpv_status,classification,air_status')
+      .not('air_status', 'eq', 'Permanently Closed')
       .range(from, from + PAGE_SIZE - 1)
 
     if (error) {
@@ -50,7 +51,8 @@ export async function queryFacilitiesNearby(lat, lon, radiusMeters) {
     throw new Error('Failed to query facilities')
   }
 
-  return data || []
+  // Filter out permanently closed facilities (also handled server-side in RPC)
+  return (data || []).filter(f => f.air_status !== 'Permanently Closed')
 }
 
 /**

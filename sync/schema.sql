@@ -94,6 +94,7 @@ as $$
     st_setsrid(st_makepoint(p_lon, p_lat), 4326)::geography,
     radius_meters
   )
+  and air_status is distinct from 'Permanently Closed'
   order by
     case compliance_status
       when 'High Priority Violation' then 1

@@ -11,7 +11,7 @@ import MapLegend from './components/MapLegend'
 import ShareButton from './components/ShareButton'
 import PDHeader from './components/PDHeader'
 import PDFooter from './components/PDFooter'
-import { queryAllFacilities, queryFacilitiesNearby, queryPollutantsForFacilities, getLastSyncDate, aggregateFacilityStats } from './lib/facilities'
+import { queryAllFacilities, queryFacilitiesNearby, queryFacilityBySourceId, queryPollutantsForFacilities, getLastSyncDate, aggregateFacilityStats } from './lib/facilities'
 import { isNearMajorRoad } from './lib/roadways'
 import {
   METRO_DETROIT_CENTER,
@@ -54,6 +54,7 @@ function App() {
   const [showRoadways, setShowRoadways] = useState(true)
   const [nearMajorRoad, setNearMajorRoad] = useState(null)
   const [pollutantMap, setPollutantMap] = useState({}) // source_id -> [{ pollutant_desc }]
+  const [selectedFacility, setSelectedFacility] = useState(null) // full detail for a clicked facility
 
   const defaultCenter = isEmbed ? METRO_DETROIT_CENTER : MICHIGAN_CENTER
   const defaultZoom = isEmbed ? METRO_DETROIT_ZOOM : MICHIGAN_ZOOM
@@ -107,12 +108,31 @@ function App() {
     window.history.replaceState({}, '', newUrl)
   }
 
+  // When a facility dot is clicked, fetch full detail and show it below the map
+  async function handleFacilityClick(facility) {
+    // If this facility is already in the nearby results, use that data (it's full detail)
+    const nearbyMatch = nearbyFacilities.find(f => f.source_id === facility.source_id)
+    if (nearbyMatch) {
+      setSelectedFacility(nearbyMatch)
+    } else {
+      // allFacilities only has minimal columns, so fetch full detail
+      const fullDetail = await queryFacilityBySourceId(facility.source_id)
+      if (fullDetail) setSelectedFacility(fullDetail)
+    }
+    // Fetch pollutants if we don't already have them
+    if (!pollutantMap[facility.source_id]) {
+      const pollutants = await queryPollutantsForFacilities([facility.source_id])
+      setPollutantMap(prev => ({ ...prev, ...pollutants }))
+    }
+  }
+
   function handleClear() {
     setUserLocation(null)
     setNearbyFacilities([])
     setStats(null)
     setNearMajorRoad(null)
     setPollutantMap({})
+    setSelectedFacility(null)
     // Reset URL
     const params = new URLSearchParams(window.location.search)
     params.delete('lat')
@@ -211,6 +231,7 @@ function App() {
                   userLocation={userLocation}
                   radiusMeters={RADIUS_PRESETS[radiusIndex].meters}
                   showRoadways={showRoadways}
+                  onFacilityClick={handleFacilityClick}
                 />
 
                 {loading && (
@@ -248,6 +269,17 @@ function App() {
                   />
                 )}
               </div>
+
+              {/* Show selected facility detail when a dot is clicked */}
+              {selectedFacility && !loading && (
+                <FacilityList
+                  facilities={[selectedFacility]}
+                  radiusIndex={radiusIndex}
+                  pollutantMap={pollutantMap}
+                  title="Selected Facility"
+                  onDismiss={() => setSelectedFacility(null)}
+                />
+              )}
 
               {nearbyFacilities.length > 0 && !loading && (
                 <FacilityList facilities={nearbyFacilities} radiusIndex={radiusIndex} pollutantMap={pollutantMap} />

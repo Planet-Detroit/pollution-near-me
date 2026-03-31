@@ -719,6 +719,23 @@ body {
   font-size: 20px;
   font-weight: 700;
   margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dismiss-selected {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: var(--pd-text-secondary);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.dismiss-selected:hover {
+  color: var(--pd-text);
 }
 
 .list-cards {

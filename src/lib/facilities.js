@@ -83,6 +83,24 @@ export async function queryPollutantsForFacilities(sourceIds) {
 }
 
 /**
+ * Fetch full detail for a single facility by source_id.
+ */
+export async function queryFacilityBySourceId(sourceId) {
+  const { data, error } = await supabase
+    .from('air_facilities')
+    .select('*')
+    .eq('source_id', sourceId)
+    .single()
+
+  if (error) {
+    console.error('Facility detail query error:', error)
+    return null
+  }
+
+  return data
+}
+
+/**
  * Get the last sync date from the sync_log table.
  */
 export async function getLastSyncDate() {

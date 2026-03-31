@@ -195,7 +195,7 @@ function FacilityCard({ facility, regulatedPollutants }) {
   )
 }
 
-export default function FacilityList({ facilities, radiusIndex, pollutantMap }) {
+export default function FacilityList({ facilities, radiusIndex, pollutantMap, title, onDismiss }) {
   if (!facilities || facilities.length === 0) return null
 
   const radius = RADIUS_PRESETS[radiusIndex]
@@ -212,7 +212,12 @@ export default function FacilityList({ facilities, radiusIndex, pollutantMap }) 
   return (
     <div className="facility-list">
       <h2 className="list-title">
-        Facility Details ({facilities.length} within {radius.miles} mi)
+        {title || `Facility Details (${facilities.length} within ${radius.miles} mi)`}
+        {onDismiss && (
+          <button className="dismiss-selected" onClick={onDismiss} aria-label="Dismiss">
+            &times;
+          </button>
+        )}
       </h2>
       <div className="list-cards">
         {sorted.map(f => (

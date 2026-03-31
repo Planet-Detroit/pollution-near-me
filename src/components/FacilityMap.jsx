@@ -75,6 +75,7 @@ export default function FacilityMap({
   userLocation,
   radiusMeters,
   showRoadways,
+  onFacilityClick,
 }) {
   // Build a set of nearby source_ids for fast lookup
   const nearbyIds = new Set((nearbyFacilities || []).map(f => f.source_id))
@@ -140,6 +141,9 @@ export default function FacilityMap({
               fillColor: dimmed ? '#d4d4d4' : getMarkerColor(f.compliance_status),
               fillOpacity: dimmed ? 0.3 : 0.85,
             }}
+            eventHandlers={{
+              click: () => onFacilityClick?.(f),
+            }}
           >
             <Popup maxWidth={320} minWidth={250}>
               <FacilityPopup facility={f} />
@@ -159,6 +163,9 @@ export default function FacilityMap({
             weight: 1.5,
             fillColor: getMarkerColor(f.compliance_status),
             fillOpacity: 0.9,
+          }}
+          eventHandlers={{
+            click: () => onFacilityClick?.(f),
           }}
         >
           <Popup maxWidth={320} minWidth={250}>

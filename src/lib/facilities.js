@@ -13,7 +13,7 @@ export async function queryAllFacilities() {
   while (true) {
     const { data, error } = await supabase
       .from('air_facilities')
-      .select('source_id,facility_name,lat,lon,compliance_status,classification,air_status')
+      .select('source_id,facility_name,lat,lon,compliance_status,hpv_status,classification,air_status')
       .range(from, from + PAGE_SIZE - 1)
 
     if (error) {
@@ -123,6 +123,8 @@ export function aggregateFacilityStats(facilities) {
     total: facilities.length,
     operating: 0,
     hpv: 0,
+    hpvActive: 0,
+    hpvAddressed: 0,
     recentViolation: 0,
     compliant: 0,
     unknown: 0,
@@ -136,6 +138,11 @@ export function aggregateFacilityStats(facilities) {
     switch (f.compliance_status) {
       case 'High Priority Violation':
         stats.hpv++
+        if (f.hpv_status && f.hpv_status.startsWith('Addressed')) {
+          stats.hpvAddressed++
+        } else {
+          stats.hpvActive++
+        }
         break
       case 'Violation w/in 1 Year':
         stats.recentViolation++

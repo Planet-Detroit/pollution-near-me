@@ -51,6 +51,34 @@ export default function About() {
       </section>
 
       <section className="about-section">
+        <h3>Understanding High Priority Violations</h3>
+        <p>
+          A High Priority Violation (HPV) is the most serious category of Clean Air Act violation.
+          When you see one in this tool, it&rsquo;s important to understand its current status:
+        </p>
+        <ul>
+          <li>
+            <strong>Active (red):</strong> The violation is unresolved. The facility has not yet
+            corrected the problem, and enforcement may be ongoing.
+          </li>
+          <li>
+            <strong>Addressed (amber):</strong> Michigan&rsquo;s Department of Environment, Great Lakes,
+            and Energy (EGLE) has confirmed the violation is resolved &mdash; for example, through a consent
+            order, corrective action, or penalty. However, EPA&rsquo;s federal database has not closed out
+            the HPV record. This is a known data lag: EPA&rsquo;s records often trail state-level
+            resolution by months or even years. <strong>The majority of HPV facilities in Michigan fall
+            into this category.</strong>
+          </li>
+        </ul>
+        <p>
+          We distinguish between these statuses using EPA&rsquo;s own <code>AIRHpvStatus</code> field,
+          which indicates whether an HPV has been &ldquo;Addressed&rdquo; at the state or federal level.
+          This allows us to show you which violations are genuinely active and which have been resolved
+          but remain on the federal record.
+        </p>
+      </section>
+
+      <section className="about-section">
         <h3>A note on data timeliness</h3>
         <p>
           There can be a lag between when a violation occurs and when it appears in EPA's database.
@@ -76,8 +104,10 @@ export default function About() {
         <h3>How to use this tool</h3>
         <ol>
           <li><strong>Search your address</strong> to see regulated facilities near you</li>
-          <li><strong>Look at the colors:</strong> Red markers indicate high priority violations (the most serious).
-            Orange markers indicate recent violations. Black markers indicate no violations identified.</li>
+          <li><strong>Look at the colors:</strong> Bright red markers indicate active, unresolved High Priority
+            Violations (the most serious). Amber markers indicate HPVs that have been addressed (resolved by the state
+            or EPA but still on EPA&rsquo;s record). Orange markers indicate recent violations. Black markers indicate
+            no violations identified.</li>
           <li><strong>Look at the sizes:</strong> Larger circles are Major sources &mdash; facilities with the highest
             emissions potential. Hover over the legend items for definitions.</li>
           <li><strong>Click any marker</strong> for a quick summary, then scroll down for full details

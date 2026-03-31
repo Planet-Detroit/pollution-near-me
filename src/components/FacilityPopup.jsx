@@ -1,9 +1,5 @@
-import { COMPLIANCE_COLORS, NAICS_LABELS } from '../lib/constants'
+import { NAICS_LABELS, getEffectiveCompliance } from '../lib/constants'
 import { parsePollutants } from '../lib/pollutants'
-
-function getComplianceInfo(status) {
-  return COMPLIANCE_COLORS[status] || COMPLIANCE_COLORS.unknown
-}
 
 function getIndustryLabel(naics) {
   if (!naics) return null
@@ -16,7 +12,7 @@ function getIndustryLabel(naics) {
 
 export default function FacilityPopup({ facility }) {
   const f = facility
-  const compliance = getComplianceInfo(f.compliance_status)
+  const compliance = getEffectiveCompliance(f)
   const industry = getIndustryLabel(f.naics)
   const pollutants = parsePollutants(f.violation_pollutants)
 
@@ -36,6 +32,17 @@ export default function FacilityPopup({ facility }) {
           <span> &mdash; {f.recent_violation_count} violation{f.recent_violation_count !== 1 ? 's' : ''}</span>
         )}
       </div>
+
+      {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Addressed') && (
+        <p className="popup-hpv-note">
+          Resolved by {f.hpv_status === 'Addressed-EPA' ? 'EPA' : 'state'} — still on EPA record
+        </p>
+      )}
+      {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Unaddressed') && (
+        <p className="popup-hpv-note popup-hpv-active">
+          Active, unresolved violation
+        </p>
+      )}
 
       {pollutants.length > 0 && (
         <p className="popup-pollutant-names">

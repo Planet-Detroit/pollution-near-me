@@ -715,6 +715,19 @@ body {
   text-decoration: underline;
 }
 
+.popup-hpv-note {
+  font-size: 11px;
+  color: var(--pd-text-secondary);
+  margin: 4px 0 0;
+  font-style: italic;
+}
+
+.popup-hpv-active {
+  color: var(--pd-status-danger);
+  font-weight: 600;
+  font-style: normal;
+}
+
 /* -- Facility List -------------------------- */
 
 .facility-list {
@@ -826,6 +839,20 @@ body {
   background: #fef2f2;
   padding: 8px 10px;
   border-radius: 4px;
+}
+
+.hpv-addressed-note {
+  font-size: 13px;
+  color: var(--pd-text-secondary);
+  font-style: italic;
+  margin-top: 6px;
+}
+
+.hpv-active-note {
+  font-size: 13px;
+  color: var(--pd-status-danger);
+  font-weight: 600;
+  margin-top: 6px;
 }
 
 /* -- Pollutant Descriptions (popup + cards) - */

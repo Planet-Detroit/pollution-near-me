@@ -22,14 +22,26 @@ export default function SummaryPanel({ stats, radiusIndex, lastSyncDate }) {
       {stats.total > 0 && (
         <>
           <div className="summary-grid">
-            <div className="summary-stat">
-              <span
-                className="stat-dot"
-                style={{ backgroundColor: COMPLIANCE_COLORS['High Priority Violation'].color }}
-              />
-              <span className="stat-count">{stats.hpv}</span>
-              <span className="stat-label">High Priority Violations (most serious)</span>
-            </div>
+            {stats.hpvActive > 0 && (
+              <div className="summary-stat">
+                <span
+                  className="stat-dot"
+                  style={{ backgroundColor: COMPLIANCE_COLORS['High Priority Violation'].color }}
+                />
+                <span className="stat-count">{stats.hpvActive}</span>
+                <span className="stat-label">Active High Priority Violations (unresolved)</span>
+              </div>
+            )}
+            {stats.hpvAddressed > 0 && (
+              <div className="summary-stat">
+                <span
+                  className="stat-dot"
+                  style={{ backgroundColor: COMPLIANCE_COLORS['HPV Addressed'].color }}
+                />
+                <span className="stat-count">{stats.hpvAddressed}</span>
+                <span className="stat-label">HPVs addressed (resolved, on EPA record)</span>
+              </div>
+            )}
             <div className="summary-stat">
               <span
                 className="stat-dot"

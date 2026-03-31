@@ -1,15 +1,13 @@
 import {
-  COMPLIANCE_COLORS,
   NAICS_LABELS,
   RADIUS_PRESETS,
   getProgramLabel,
   getProgramUrl,
+  getEffectiveCompliance,
 } from '../lib/constants'
 import { parsePollutants, getPollutantInfo } from '../lib/pollutants'
 
-function getComplianceInfo(status) {
-  return COMPLIANCE_COLORS[status] || COMPLIANCE_COLORS.unknown
-}
+// getEffectiveCompliance imported from constants handles HPV addressed/unaddressed distinction
 
 function getIndustryLabel(naics) {
   if (!naics) return null
@@ -41,7 +39,7 @@ function formatNumber(val) {
 
 function FacilityCard({ facility, regulatedPollutants }) {
   const f = facility
-  const compliance = getComplianceInfo(f.compliance_status)
+  const compliance = getEffectiveCompliance(f)
   const industry = getIndustryLabel(f.naics)
   const programs = (f.programs || '').split(', ').filter(Boolean)
   const pollutants = parsePollutants(f.violation_pollutants)
@@ -81,6 +79,17 @@ function FacilityCard({ facility, regulatedPollutants }) {
             )}
             {f.months_with_hpv > 0 && (
               <p>In High Priority Violation status for {f.months_with_hpv} month{f.months_with_hpv !== 1 ? 's' : ''}</p>
+            )}
+            {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Addressed') && (
+              <p className="hpv-addressed-note">
+                This violation has been resolved by {f.hpv_status === 'Addressed-EPA' ? 'EPA' : 'the state (EGLE)'},
+                but the HPV designation remains on EPA&rsquo;s federal record.
+              </p>
+            )}
+            {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Unaddressed') && (
+              <p className="hpv-active-note">
+                This is an active, unresolved High Priority Violation &mdash; the most serious category of Clean Air Act violation.
+              </p>
             )}
           </div>
         )}
@@ -200,12 +209,17 @@ export default function FacilityList({ facilities, radiusIndex, pollutantMap, ti
 
   const radius = RADIUS_PRESETS[radiusIndex]
 
-  // Sort: violations first (HPV, then recent), then by name
+  // Sort: active HPV first, then addressed HPV, then recent violations, then by name
   const sorted = [...facilities].sort((a, b) => {
-    const order = { 'High Priority Violation': 0, 'Violation w/in 1 Year': 1 }
-    const aOrder = order[a.compliance_status] ?? 2
-    const bOrder = order[b.compliance_status] ?? 2
-    if (aOrder !== bOrder) return aOrder - bOrder
+    function sortKey(f) {
+      if (f.compliance_status === 'High Priority Violation') {
+        return f.hpv_status?.startsWith('Addressed') ? 1 : 0
+      }
+      if (f.compliance_status === 'Violation w/in 1 Year') return 2
+      return 3
+    }
+    const diff = sortKey(a) - sortKey(b)
+    if (diff !== 0) return diff
     return a.facility_name.localeCompare(b.facility_name)
   })
 

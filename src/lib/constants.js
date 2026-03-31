@@ -14,10 +14,26 @@ export const DEFAULT_RADIUS_INDEX = 2 // "My area" (3 miles)
 
 // Compliance status colors and labels
 export const COMPLIANCE_COLORS = {
-  'High Priority Violation': { color: '#dc2626', label: 'High Priority Violation', shortLabel: 'High Priority Violation' },
+  'High Priority Violation': { color: '#dc2626', label: 'Active High Priority Violation', shortLabel: 'Active HPV' },
+  'HPV Addressed': { color: '#d97706', label: 'High Priority Violation (Addressed)', shortLabel: 'HPV (Addressed)' },
   'Violation w/in 1 Year': { color: '#f97316', label: 'Violation Within Past Year', shortLabel: 'Recent Violation' },
   'No Violation Identified': { color: '#333333', label: 'No Violations Identified', shortLabel: 'No Violations' },
   unknown: { color: '#9ca3af', label: 'Status Unknown', shortLabel: 'Unknown' },
+}
+
+/**
+ * Determine the effective compliance category for a facility by examining
+ * both compliance_status and hpv_status. Facilities with HPVs that have been
+ * addressed by the state or EPA get a distinct amber treatment instead of red.
+ */
+export function getEffectiveCompliance(facility) {
+  if (facility.compliance_status === 'High Priority Violation') {
+    const hpv = facility.hpv_status || ''
+    if (hpv.startsWith('Addressed')) {
+      return COMPLIANCE_COLORS['HPV Addressed']
+    }
+  }
+  return COMPLIANCE_COLORS[facility.compliance_status] || COMPLIANCE_COLORS.unknown
 }
 
 // Facility classification sizes (marker radius in pixels)

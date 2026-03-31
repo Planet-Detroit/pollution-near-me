@@ -15,7 +15,7 @@ const TERMS = [
   },
   {
     term: 'High Priority Violation (HPV)',
-    definition: 'The most serious type of Clean Air Act violation. Includes exceeding emission limits, operating without a required permit, or failing to meet compliance schedules. HPVs are tracked at the federal level and can trigger formal enforcement action.',
+    definition: 'The most serious type of Clean Air Act violation. Includes exceeding emission limits, operating without a required permit, or failing to meet compliance schedules. HPVs are tracked at the federal level and can trigger formal enforcement action. An HPV can be "Unaddressed" (active — the facility has not yet resolved the issue) or "Addressed" (the state or EPA has confirmed the issue is resolved, but the HPV designation remains on the federal record). In Michigan, the majority of HPV facilities have an "Addressed" status, meaning the violation was real but has since been corrected.',
   },
   {
     term: 'Title V (Major Source) Permit',

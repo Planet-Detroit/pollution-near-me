@@ -37,7 +37,7 @@ describe('FacilityPopup', () => {
 
   it('displays compliance status and violation count', () => {
     render(<FacilityPopup facility={mockFacility} />)
-    expect(screen.getByText('High Priority Violation')).toBeInTheDocument()
+    expect(screen.getByText('High Priority Violation (Addressed)')).toBeInTheDocument()
     expect(screen.getByText(/3 violation/)).toBeInTheDocument()
   })
 

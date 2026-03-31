@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { MapContainer, TileLayer, CircleMarker, Circle, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
-import { COMPLIANCE_COLORS, CLASSIFICATION_SIZES, DEFAULT_MARKER_SIZE } from '../lib/constants'
+import { CLASSIFICATION_SIZES, DEFAULT_MARKER_SIZE, getEffectiveCompliance } from '../lib/constants'
 import FacilityPopup from './FacilityPopup'
 import RoadwayLayer from './RoadwayLayer'
 
@@ -42,8 +42,8 @@ function MapController({ center, zoom, userLocation, radiusMeters }) {
   return null
 }
 
-function getMarkerColor(complianceStatus) {
-  return (COMPLIANCE_COLORS[complianceStatus] || COMPLIANCE_COLORS.unknown).color
+function getMarkerColor(facility) {
+  return getEffectiveCompliance(facility).color
 }
 
 function getMarkerSize(classification) {
@@ -138,7 +138,7 @@ export default function FacilityMap({
             pathOptions={{
               color: dimmed ? '#ccc' : '#fff',
               weight: dimmed ? 0.5 : 1,
-              fillColor: dimmed ? '#d4d4d4' : getMarkerColor(f.compliance_status),
+              fillColor: dimmed ? '#d4d4d4' : getMarkerColor(f),
               fillOpacity: dimmed ? 0.3 : 0.85,
             }}
             eventHandlers={{
@@ -161,7 +161,7 @@ export default function FacilityMap({
           pathOptions={{
             color: '#fff',
             weight: 1.5,
-            fillColor: getMarkerColor(f.compliance_status),
+            fillColor: getMarkerColor(f),
             fillOpacity: 0.9,
           }}
           eventHandlers={{

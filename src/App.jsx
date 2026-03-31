@@ -160,17 +160,27 @@ function App() {
     }
   }
 
-  // Build share URL
+  // Build share URL — works for both address searches and selected facilities
   function getShareUrl() {
-    if (!userLocation) return window.location.href
-    const params = new URLSearchParams()
-    params.set('lat', userLocation.lat.toFixed(5))
-    params.set('lon', userLocation.lon.toFixed(5))
-    params.set('r', radiusIndex.toString())
-    if (userLocation.matchedAddress) {
-      params.set('addr', userLocation.matchedAddress)
+    if (userLocation) {
+      const params = new URLSearchParams()
+      params.set('lat', userLocation.lat.toFixed(5))
+      params.set('lon', userLocation.lon.toFixed(5))
+      params.set('r', radiusIndex.toString())
+      if (userLocation.matchedAddress) {
+        params.set('addr', userLocation.matchedAddress)
+      }
+      return `${window.location.origin}${window.location.pathname}?${params.toString()}`
     }
-    return `${window.location.origin}${window.location.pathname}?${params.toString()}`
+    if (selectedFacility) {
+      const params = new URLSearchParams()
+      params.set('lat', selectedFacility.lat.toFixed(5))
+      params.set('lon', selectedFacility.lon.toFixed(5))
+      params.set('r', '0')
+      params.set('addr', selectedFacility.facility_name)
+      return `${window.location.origin}${window.location.pathname}?${params.toString()}`
+    }
+    return window.location.href
   }
 
   return (
@@ -186,7 +196,7 @@ function App() {
         <div className="app-content">
           <div className="search-and-controls">
             <AddressSearch onResult={handleAddressResult} isLoading={loading} />
-            {userLocation && (
+            {(userLocation || selectedFacility) && (
               <button className="clear-button" onClick={handleClear}>
                 Clear search
               </button>
@@ -272,13 +282,25 @@ function App() {
 
               {/* Show selected facility detail when a dot is clicked */}
               {selectedFacility && !loading && (
-                <FacilityList
-                  facilities={[selectedFacility]}
-                  radiusIndex={radiusIndex}
-                  pollutantMap={pollutantMap}
-                  title="Selected Facility"
-                  onDismiss={() => setSelectedFacility(null)}
-                />
+                <>
+                  {!userLocation && (
+                    <div className="controls-row">
+                      <ShareButton
+                        url={getShareUrl()}
+                        address={selectedFacility.facility_name}
+                        lat={selectedFacility.lat}
+                        lon={selectedFacility.lon}
+                      />
+                    </div>
+                  )}
+                  <FacilityList
+                    facilities={[selectedFacility]}
+                    radiusIndex={radiusIndex}
+                    pollutantMap={pollutantMap}
+                    title="Selected Facility"
+                    onDismiss={() => setSelectedFacility(null)}
+                  />
+                </>
               )}
 
               {nearbyFacilities.length > 0 && !loading && (

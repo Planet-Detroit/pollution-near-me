@@ -222,17 +222,21 @@ function App() {
               {userLocation && (
                 <div className="controls-row">
                   <RadiusSelector selectedIndex={radiusIndex} onChange={handleRadiusChange} />
-                  <ShareButton
-                    url={getShareUrl()}
-                    address={userLocation.matchedAddress}
-                    lat={userLocation.lat}
-                    lon={userLocation.lon}
-                    stats={stats}
-                  />
                 </div>
               )}
 
               <div className="map-and-summary">
+                {(userLocation || selectedFacility) && (
+                  <div className="map-share-overlay">
+                    <ShareButton
+                      url={getShareUrl()}
+                      address={userLocation?.matchedAddress || selectedFacility?.facility_name}
+                      lat={userLocation?.lat || selectedFacility?.lat}
+                      lon={userLocation?.lon || selectedFacility?.lon}
+                      stats={stats}
+                    />
+                  </div>
+                )}
                 <FacilityMap
                   center={defaultCenter}
                   zoom={defaultZoom}
@@ -282,25 +286,13 @@ function App() {
 
               {/* Show selected facility detail when a dot is clicked */}
               {selectedFacility && !loading && (
-                <>
-                  {!userLocation && (
-                    <div className="controls-row">
-                      <ShareButton
-                        url={getShareUrl()}
-                        address={selectedFacility.facility_name}
-                        lat={selectedFacility.lat}
-                        lon={selectedFacility.lon}
-                      />
-                    </div>
-                  )}
-                  <FacilityList
-                    facilities={[selectedFacility]}
-                    radiusIndex={radiusIndex}
-                    pollutantMap={pollutantMap}
-                    title="Selected Facility"
-                    onDismiss={() => setSelectedFacility(null)}
-                  />
-                </>
+                <FacilityList
+                  facilities={[selectedFacility]}
+                  radiusIndex={radiusIndex}
+                  pollutantMap={pollutantMap}
+                  title="Selected Facility"
+                  onDismiss={() => setSelectedFacility(null)}
+                />
               )}
 
               {nearbyFacilities.length > 0 && !loading && (

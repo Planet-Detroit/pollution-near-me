@@ -400,6 +400,13 @@ body {
   position: relative;
 }
 
+.map-share-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}
+
 .facility-map {
   width: 100%;
   height: 500px;

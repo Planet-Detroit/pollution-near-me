@@ -3,11 +3,11 @@ import { COMPLIANCE_COLORS, CLASSIFICATION_SIZES } from '../lib/constants'
 const STATUS_ITEMS = [
   {
     key: 'High Priority Violation',
-    tooltip: 'Active, unresolved High Priority Violations — the most serious category. The facility has been cited for exceeding emission limits, operating without a required permit, or failing to meet compliance deadlines, and the issue has NOT yet been resolved.',
+    tooltip: 'Active, unaddressed High Priority Violations — the most serious category. The facility has been cited for exceeding emission limits, operating without a required permit, or failing to meet compliance deadlines, and the issue has NOT yet been addressed.',
   },
   {
     key: 'HPV Addressed',
-    tooltip: 'This facility was flagged for a High Priority Violation, but the issue has been resolved by the state (EGLE) or EPA. The HPV designation remains on EPA\'s federal record. Most HPV facilities in Michigan fall into this category.',
+    tooltip: 'This facility was flagged for a High Priority Violation, but the issue has been addressed by the state (EGLE) or EPA. The HPV designation remains on EPA\'s federal record. Most HPV facilities in Michigan fall into this category.',
   },
   {
     key: 'Violation w/in 1 Year',

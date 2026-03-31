@@ -82,13 +82,13 @@ function FacilityCard({ facility, regulatedPollutants }) {
             )}
             {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Addressed') && (
               <p className="hpv-addressed-note">
-                This violation has been resolved by {f.hpv_status === 'Addressed-EPA' ? 'EPA' : 'the state (EGLE)'},
+                This violation has been addressed by {f.hpv_status === 'Addressed-EPA' ? 'EPA' : 'the state (EGLE)'},
                 but the HPV designation remains on EPA&rsquo;s federal record.
               </p>
             )}
             {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Unaddressed') && (
               <p className="hpv-active-note">
-                This is an active, unresolved High Priority Violation &mdash; the most serious category of Clean Air Act violation.
+                This is an active, unaddressed High Priority Violation &mdash; the most serious category of Clean Air Act violation.
               </p>
             )}
           </div>

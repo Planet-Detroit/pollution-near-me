@@ -35,12 +35,12 @@ export default function FacilityPopup({ facility }) {
 
       {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Addressed') && (
         <p className="popup-hpv-note">
-          Resolved by {f.hpv_status === 'Addressed-EPA' ? 'EPA' : 'state'} — still on EPA record
+          Addressed by {f.hpv_status === 'Addressed-EPA' ? 'EPA' : 'state'} — still on EPA record
         </p>
       )}
       {f.compliance_status === 'High Priority Violation' && f.hpv_status?.startsWith('Unaddressed') && (
         <p className="popup-hpv-note popup-hpv-active">
-          Active, unresolved violation
+          Active, unaddressed violation
         </p>
       )}
 

@@ -29,7 +29,7 @@ export default function SummaryPanel({ stats, radiusIndex, lastSyncDate }) {
                   style={{ backgroundColor: COMPLIANCE_COLORS['High Priority Violation'].color }}
                 />
                 <span className="stat-count">{stats.hpvActive}</span>
-                <span className="stat-label">Active High Priority Violations (unresolved)</span>
+                <span className="stat-label">Active High Priority Violations (unaddressed)</span>
               </div>
             )}
             {stats.hpvAddressed > 0 && (
@@ -39,7 +39,7 @@ export default function SummaryPanel({ stats, radiusIndex, lastSyncDate }) {
                   style={{ backgroundColor: COMPLIANCE_COLORS['HPV Addressed'].color }}
                 />
                 <span className="stat-count">{stats.hpvAddressed}</span>
-                <span className="stat-label">HPVs addressed (resolved, on EPA record)</span>
+                <span className="stat-label">HPVs addressed by state (still on EPA record)</span>
               </div>
             )}
             <div className="summary-stat">

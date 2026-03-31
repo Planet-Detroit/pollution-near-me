@@ -518,7 +518,7 @@ body {
   padding: 10px 12px;
   border-radius: 6px;
   width: 260px;
-  z-index: 100;
+  z-index: 1100;
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -543,7 +543,7 @@ body {
   border: 1px solid var(--pd-border);
   border-top: none;
   border-radius: 0 0 8px 8px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .embed-mode .map-controls-bar {

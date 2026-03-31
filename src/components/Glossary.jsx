@@ -70,6 +70,10 @@ const TERMS = [
     definition: 'An on-site inspection by EPA or state regulators to assess whether a facility is following its permit conditions and air quality regulations.',
   },
   {
+    term: 'Cumulative Impacts',
+    definition: 'The totality of exposures to combinations of chemical and nonchemical stressors and their effects on health, well-being, and quality of life. Cumulative impacts consider not just a single facility or pollutant, but the combined burden of multiple pollution sources, environmental conditions, and social factors (like poverty or lack of healthcare access) that affect a community over time. A neighborhood near both a refinery and a highway, for example, may face greater health risks than either source alone would suggest.',
+  },
+  {
     term: 'Formal Enforcement Action',
     definition: 'A legal action taken against a facility for violations, such as a consent order, administrative penalty, or court filing. More serious than informal actions.',
   },

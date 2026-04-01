@@ -148,7 +148,7 @@ export default function About() {
           <li><strong>Search your address</strong> to see regulated facilities near you</li>
           <li><strong>Look at the colors:</strong> Bright red markers indicate active, unaddressed High Priority
             Violations (the most serious). Amber markers indicate HPVs that have been addressed by the state
-            or EPA but remain on EPA&rsquo;s record. Orange markers indicate recent violations. Black markers indicate
+            or EPA but remain on EPA&rsquo;s record. Red markers indicate violations within the past year. Black markers indicate
             no violations identified.</li>
           <li><strong>Look at the sizes:</strong> Larger circles are Major sources &mdash; facilities with the highest
             emissions potential. Hover over the legend items for definitions.</li>

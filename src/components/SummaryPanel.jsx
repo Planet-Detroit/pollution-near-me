@@ -48,7 +48,7 @@ export default function SummaryPanel({ stats, radiusIndex, lastSyncDate }) {
                 style={{ backgroundColor: COMPLIANCE_COLORS['Violation w/in 1 Year'].color }}
               />
               <span className="stat-count">{stats.recentViolation}</span>
-              <span className="stat-label">Recent Violations</span>
+              <span className="stat-label">Violations</span>
             </div>
             <div className="summary-stat">
               <span

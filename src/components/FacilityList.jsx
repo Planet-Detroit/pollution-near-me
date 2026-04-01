@@ -73,9 +73,9 @@ function FacilityCard({ facility, regulatedPollutants }) {
         {f.recent_violation_count > 0 && (
           <div className="card-section card-violations">
             <h4>Violations</h4>
-            <p><strong>{f.recent_violation_count}</strong> recent violation{f.recent_violation_count !== 1 ? 's' : ''}</p>
+            <p><strong>{f.recent_violation_count}</strong> violation{f.recent_violation_count !== 1 ? 's' : ''}</p>
             {f.last_violation_date && (
-              <p>Most recent: {formatDate(f.last_violation_date)}</p>
+              <p>Last violation: {formatDate(f.last_violation_date)}</p>
             )}
             {f.months_with_hpv > 0 && (
               <p>In High Priority Violation status for {f.months_with_hpv} month{f.months_with_hpv !== 1 ? 's' : ''}</p>

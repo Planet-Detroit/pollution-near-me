@@ -33,7 +33,7 @@ describe('Constants', () => {
 
   it('compliance colors cover all expected statuses', () => {
     expect(COMPLIANCE_COLORS['High Priority Violation'].color).toBe('#dc2626')
-    expect(COMPLIANCE_COLORS['Violation w/in 1 Year'].color).toBe('#f97316')
+    expect(COMPLIANCE_COLORS['Violation w/in 1 Year'].color).toBe('#e53e3e')
     expect(COMPLIANCE_COLORS['No Violation Identified'].color).toBe('#333333')
     expect(COMPLIANCE_COLORS.unknown.color).toBe('#9ca3af')
   })

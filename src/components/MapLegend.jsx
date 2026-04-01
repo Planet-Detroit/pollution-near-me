@@ -7,7 +7,7 @@ const STATUS_ITEMS = [
   },
   {
     key: 'Violation w/in 1 Year',
-    tooltip: 'This facility has been cited for a violation in the past year, but it does not rise to "High Priority" level. May include reporting failures, minor permit deviations, or issues being actively resolved.',
+    tooltip: 'This facility has been cited for a violation within the past year, but it does not rise to "High Priority" level. May include reporting failures, minor permit deviations, or issues being actively resolved.',
   },
   {
     key: 'HPV Addressed',

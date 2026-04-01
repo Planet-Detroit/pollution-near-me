@@ -18,7 +18,7 @@ export default function ShareButton({ url, address, lat, lon, stats }) {
 
     const title = `Air pollution sources near ${address}`
     const description = stats
-      ? `${stats.total} regulated facilities within 3 miles. ${stats.hpv} with high priority violations, ${stats.recentViolation} with recent violations.`
+      ? `${stats.total} regulated facilities within 3 miles. ${stats.hpv} with high priority violations, ${stats.recentViolation} with violations.`
       : `See air pollution sources near this Michigan address.`
 
     document.title = `${title} | Air Pollution Near Me`

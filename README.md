@@ -111,3 +111,10 @@ MIT
 - **Planet Detroit** — [planetdetroit.org](https://planetdetroit.org)
 - **Shelby Jouppi** — Original [air permit violation dashboard](https://github.com/Planet-Detroit/air-permit-violation-dashboard) and [EGLE database scraper](https://github.com/srjouppi/michigan-egle-database-auto-scraper)
 - **EPA ECHO** — Facility and compliance data
+
+## License
+
+GPL-3.0 — this is mission-aligned open source: use it, adapt it for your
+community, share what you build. The GPL's share-alike terms mean any
+derivative must remain open source too, so no one can turn a public
+air-quality tool into a proprietary product. See [LICENSE](./LICENSE).
